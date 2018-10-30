@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "desription": "Application to learn piano",
   "author": "Kamilogram (Kamil Gliński)",
-  "homepage": "http://kamilograpp.pl",
+  "homepage": "https://kamilogram.github.io/kamilograpp/",
   "private": true,
   "dependencies": {
     "rc-slider": "^8.0.2",
