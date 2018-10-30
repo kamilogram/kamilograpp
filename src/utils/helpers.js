@@ -7,7 +7,7 @@ export default {
 
   drawUniqueAndFarEnoughValues(valuesAmount=3, from=0, to=6) {
     if(valuesAmount * 2 > to - from + 1) {
-      console.log('To small range');
+      console.log('Too small range');
       return [];
     }
     const output = [];
