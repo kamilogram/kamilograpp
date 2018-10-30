@@ -1,0 +1,20 @@
+@import "../../styles/constans.scss";
+
+.MainArea {
+  height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT});
+  background-color: $MAIN_BACKGROUND_COLOR;
+  position: relative;
+}
+
+.animateTooglingPanel-enter {
+  opacity: 0.3;
+}
+
+.animateTooglingPanel-enter.animateTooglingPanel-enter-active {
+  opacity: 0.8;
+  transition: 3s;
+}
+
+.MainArea.withoutMenu {
+  height: calc(100vh - #{$FOOTER_HEIGHT})
+}

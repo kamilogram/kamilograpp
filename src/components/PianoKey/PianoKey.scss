@@ -1,0 +1,53 @@
+@import "../../styles/constans.scss";
+
+.PianoKey {
+  border-width: $KEY_BORDER_WIDTH;
+  border-style: solid;
+  vertical-align: bottom;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+
+
+  .ghostPianoKeyContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .ghostPianoKey {
+      transform-origin: 50% 100%;
+      height: 100%;
+
+      &.guess {
+        background-color: $GUESSED_COLOR;
+      }
+
+      &.badGuess {
+        background-color: $BAD_GUESS_COLOR;
+      }
+
+      &.animPianoKeyColorDisappear-enter {
+      }
+
+      &.animPianoKeyColorDisappear-enter-active {
+      }
+
+      &.animPianoKeyColorDisappear-leave {
+      }
+
+      &.animPianoKeyColorDisappear-leave-active {
+        animation: hideClickedPianoKeyColor 0.4s ease-in 1 forwards;
+      }
+    }
+  }
+
+  .middleC {
+    // position: absolute;
+    width: 100%;
+    color: grey;
+    opacity: 0.8;
+  }
+}

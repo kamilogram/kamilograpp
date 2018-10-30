@@ -1,0 +1,11 @@
+@import "../../styles/constans.scss";
+
+.Footer {
+  height: $FOOTER_HEIGHT;
+  text-align: center;
+  vertical-align: middle;
+  line-height: $FOOTER_HEIGHT;
+  font-style: italic;
+  font-family: monospace;
+  font-size: 0.86em;
+}

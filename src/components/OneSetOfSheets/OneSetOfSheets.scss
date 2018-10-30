@@ -1,0 +1,22 @@
+@import "../../styles/constans.scss";
+
+.OneSetOfSheets {
+  width: 25%;
+  height: 100%;
+  float: left;
+  position: relative;
+
+  .oneSheetWithChroma {
+    overflow: visible;
+    position: absolute;
+    left: 34%;
+  }
+
+  .simultaneousSheet {
+    position: absolute;
+  }
+
+  .chroma {
+    margin-left: -15px;
+  }
+}

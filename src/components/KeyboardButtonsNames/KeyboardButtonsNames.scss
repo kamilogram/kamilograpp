@@ -1,0 +1,20 @@
+@import "../../styles/constans.scss";
+
+.KeyboardButtonsNames {
+  display: flex;
+  justify-content: center;
+}
+
+.KeyNameButton {
+  background-color: white;
+  padding: 5px 20px;
+  margin: auto 10px;
+
+  &:hover {
+    background-color: $HOOVERED_BUTTON_COLOR;
+  }
+
+  &.clicked {
+    background-color: $CLICKED_BUTTON_COLOR
+  }
+}

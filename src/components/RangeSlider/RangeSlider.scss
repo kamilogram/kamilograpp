@@ -1,0 +1,35 @@
+@import "../../styles/constans.scss";
+
+.RangeSlider {
+  padding: 0 10px;
+  overflow: visible;
+
+  .rc-slider {
+    overflow: visible;
+    height: 37px;
+  }
+
+  .rc-slider-mark {
+    font-size: 0.85em;
+    overflow: visible;
+  }
+
+  .rc-slider-track {
+    background-color: $MAIN_COLOR_2;
+  }
+
+  .rc-slider-handle {
+    border: solid 2px $MAIN_COLOR_2;
+  }
+
+  .rc-slider-handle:active {
+    border-color: $MAIN_COLOR_2;
+    box-shadow: 0 0 5px $MAIN_COLOR_2;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+  }
+
+  .rc-slider-dot-active {
+    border: solid 2px $MAIN_COLOR_2;
+  }
+}

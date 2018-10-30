@@ -1,0 +1,15 @@
+@import "../../styles/constans.scss";
+
+.SheetsApp {
+  width: calc(100vw - 2 * #{$SIDE_PANEL_CLOSED_WIDTH});
+  height: 100%;
+  margin-left: $SIDE_PANEL_CLOSED_WIDTH;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.SheetsApp.withoutMenu {
+  height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT} - 10px);
+  padding-top: calc(#{$MENU_HEIGHT} + 10px);
+}

@@ -1,0 +1,83 @@
+@import "../../styles/constans.scss";
+
+$MAIN_KEYBOARD_HEIGHT: 200px;
+$MAIN_KEY_WIDTH: 50px;
+$MAIN_KEY_HEIGHT: 200px;
+$KEY_BORDER_WIDTH: 1px;
+
+// @keyframes informAboutPrevGuessWhite {
+//   0% { background-color: $GUESSED_COLOR; }
+//   100% { background-color: $WHITE_PIANO_KEY_COLOR; }
+// }
+//
+// @keyframes informAboutPrevGuessBlack {
+//   0% { background-color: $GUESSED_COLOR; }
+//   // 50% { background-color: black; }
+//   100% { background-color: $BLACK_PIANO_KEY_COLOR; }
+// }
+//
+// @keyframes informAboutPrevBadWhite {
+//   0% { background-color: $BAD_GUESS_COLOR; }
+//   100% { background-color: $WHITE_PIANO_KEY_COLOR; }
+// }
+//
+// @keyframes informAboutPrevBadBlack {
+//   0% { background-color: $BAD_GUESS_COLOR; }
+//   // 50% { background-color: black; }
+//   100% { background-color: $BLACK_PIANO_KEY_COLOR; }
+// }
+
+@keyframes hideClickedPianoKeyColor {
+  0% {
+    // transform-origin: 50% 100%;
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%) scaleY(0) skewY(50deg);
+    opacity: 0.1;
+  }
+}
+
+// @keyframes showAndHideClickedPianoKeyColor {
+//   0% {
+//     // transform-origin: 50% 100%;
+//   }
+//   50% {
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translateY(100%) scaleY(0) skewY(50deg);
+//     opacity: 0.1;
+//   }
+// }
+
+
+
+.PianoKeyboard {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  margin: 10px auto;
+  height: $MAIN_KEYBOARD_HEIGHT;
+  box-sizing: border-box;
+}
+
+
+
+.WhitePianoKey {
+  width: $MAIN_KEY_WIDTH;
+  height: calc(100% - 2 * #{$KEY_BORDER_WIDTH});
+  background-color: white;
+  border-color: black;
+  margin-right: -1px;
+}
+
+.BlackPianoKey {
+  width: calc(#{$MAIN_KEY_WIDTH} * 0.7);
+  height: calc(#{$MAIN_KEY_HEIGHT} * 0.6);
+  background-color: $BLACK_PIANO_KEY_COLOR;
+  border-color: black;
+  margin: 0 calc(-1 * #{$MAIN_KEY_WIDTH} / 2.5);
+  z-index: 1;
+  word-wrap: break-word;
+}

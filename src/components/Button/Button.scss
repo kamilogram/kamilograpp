@@ -1,0 +1,27 @@
+@import "../../styles/constans.scss";
+
+.Button {
+  cursor: pointer;
+  color: inherit;
+  border: solid 1px $MAIN_COLOR_LIGHT;
+  margin: 0 1px;
+  padding: 1px 10px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: $MAIN_COLOR_LIGHT;
+  margin: 2px;
+
+  &:hover {
+    background-color: $MAIN_COLOR;
+    border: solid 1px $MAIN_COLOR;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+}
+
+button {
+
+}

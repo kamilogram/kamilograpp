@@ -1,0 +1,22 @@
+@import "../../styles/constans.scss";
+
+.Header {
+  background-color: $HEADER_BACKGROUND_COLOR;
+  height: $MENU_HEIGHT;
+  display: flex;
+  justify-content: space-around;
+}
+
+.Logo {
+  width: 280px;
+  overflow-x: visible;
+  box-sizing: border-box;
+  padding: 1px;
+}
+
+//without menu
+.Header.withoutMenu {
+  position: absolute;
+  width: 100%;
+  display: flex;
+}

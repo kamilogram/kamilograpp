@@ -1,0 +1,26 @@
+@import "../../styles/constans.scss";
+
+.SidePanel {
+  z-index: 30;
+  min-width: $MIN_PANEL_WIDTH;
+  max-width: $MAX_PANEL_WIDTH;
+  height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT});
+  background-color: $SIDE_PANEL_BACKGROUND_COLOR;
+  padding: 10px;
+
+  .sidePanelHeader {
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.5em;
+    font-weight: bold;
+  }
+
+  .SideUnit {
+    padding-top: 10px;
+  }
+}
+
+//without menu
+.SidePanel.withoutMenu {
+  height: calc(100vh - #{$FOOTER_HEIGHT});
+}

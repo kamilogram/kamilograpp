@@ -1,0 +1,58 @@
+@import "../../styles/constans.scss";
+
+.SheetsContainer {
+  display: flex;
+  justify-content: center;
+
+  .Sheets {
+    font-family: NewTypeMyMusic;
+    font-size: 110px;
+    display: inline-flex;
+    justify-content: center;
+    margin-bottom: -6px;
+    position: relative;
+
+    .preambule {
+      position: relative;
+
+      .trebleClef {
+        height: 0.8em;
+        position: absolute;
+        top: 0.6em;
+        left: 0.1em;
+      }
+
+    }
+
+    .sheetsField {
+      position: relative;
+
+      .staveField {
+
+      }
+
+      .SheetSets {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .endingLine {
+      overflow: visible;
+    }
+
+    &.oneOfClefs {
+      font-size: 101px;
+      height: 160px;
+      line-height: 262.4px;
+    }
+
+
+  }
+
+  .actualSet {
+    background-color: $LIGHTEN_SHEETS_SET_COLOR;
+  }
+}

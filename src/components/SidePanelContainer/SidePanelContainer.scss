@@ -1,0 +1,108 @@
+@import "../../styles/constans.scss";
+
+@keyframes hidePanelOpeningButton {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+    background-color: $MAIN_COLOR_LIGHT;
+  }
+  30% {
+    opacity: 0.3;
+    background-color: white;
+  }
+  100% {
+    transform: translateX(-$SIDE_PANEL_OPENING_BUTTON_WIDTH);
+    opacity: 0;
+    background-color: white;
+  }
+}
+
+@keyframes showPanelOpeningButton {
+  0% {
+    transform: translateX(-$SIDE_PANEL_OPENING_BUTTON_WIDTH);
+    opacity: 0;
+    background-color: white;
+  }
+  40% {
+    opacity: 0.5;
+    background-color: white;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    background-color: $MAIN_COLOR_LIGHT;
+  }
+}
+
+.SidePanelContainer {
+  position: absolute;
+  top: 0;
+  z-index: 30;
+
+  .panelOpeningButton {
+    width: $SIDE_PANEL_CLOSED_WIDTH;
+    // height: $SIDE_PANEL_OPENING_BUTTON_WIDTH;
+    background-color: $MAIN_COLOR_LIGHT;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .panelOpeningButtonText {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      margin: auto 26% 29% auto;
+      transform: rotate(180deg);
+    }
+
+    .panelOpeningButtonImg {
+      display: flex;
+      justify-content: center;
+      line-height: $SIDE_PANEL_OPENING_BUTTON_WIDTH;
+    }
+
+    &.toggleSidePanelAnim-enter {
+      animation: showPanelOpeningButton 0.4s ease-out 1 0.2s backwards;
+      position: absolute;
+      top: 0;
+    }
+
+    &.toggleSidePanelAnim-enter-active {
+    }
+
+    &.toggleSidePanelAnim-leave {
+      position: absolute;
+      top: 0;
+    }
+
+    &.toggleSidePanelAnim-leave-active {
+      animation: hidePanelOpeningButton 0.6s cubic-bezier(.46,-0.35,0,.97) 1 forwards;
+    }
+  }
+
+  .SidePanel {
+
+    &.toggleSidePanelAnim-enter {
+      opacity: 0;
+      transform: perspective(100px) translateY(-20px) translateZ(-10px) rotateX(-3deg);
+      transform-origin: 50% 0;
+    }
+
+    &.toggleSidePanelAnim-enter-active {
+      opacity: 1;
+      transform: perspective(100px) translateY(0) translateY(0) rotateX(0);
+      transition: all 0.2s ease-out 0.2s;
+    }
+
+    &.toggleSidePanelAnim-leave {
+      top: 0;
+      opacity: 1;
+    }
+
+    &.toggleSidePanelAnim-leave-active {
+      opacity: 0;
+      transition: all 0.4s ease-in;
+    }
+  }
+}

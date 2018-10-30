@@ -1,0 +1,30 @@
+@import "../../styles/constans.scss";
+
+.Menu {
+  flex-grow: 1;
+}
+
+.MenuList {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+}
+
+.MenuListItem {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  flex-grow: 1;
+
+  &.currentPage {
+    background-color: $MAIN_COLOR_LIGHT;
+    font-weight: bold;
+  }
+}
+
+.MenuItem {
+  margin: 0 auto;
+}

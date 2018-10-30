@@ -1,0 +1,27 @@
+@import "../../styles/constans.scss";
+
+.UneditableIntegerInput {
+  margin: 1px 3px;
+  display: flex;
+
+  .moreLessButton {
+    font-weight: 900;
+    padding: 0 8px;
+    margin: 1px 3px;
+    color: $MAIN_COLOR_DEFAULT;
+  }
+
+  .Input {
+    width: 20px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    background-color: $MAIN_COLOR_LIGHT;
+    border-radius: 6px;
+  }
+
+  .inactive {
+    opacity: 0.5;
+    cursor: no-drop;
+  }
+}

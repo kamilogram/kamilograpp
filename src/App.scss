@@ -1,0 +1,25 @@
+.App {
+  background-image: url(../resources/images/background.jpg);
+  background-position: center;
+  //TODO uzależnić od tego czy widok jest horyzontalny czy nie
+  background-size: cover;
+  font-family: GfsNeoHellenic;
+  font-size: 1.1em;
+}
+
+.wholeWide {
+  width: 100%;
+}
+
+.li {
+  list-style-type: none;
+}
+
+div, span {
+  overflow: hidden;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: 0.9em;
+}
