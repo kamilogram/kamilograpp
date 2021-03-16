@@ -12,7 +12,11 @@ import {
 
 
 const mapStateToProps = state => ({
-  sheetsAppState: state.sheetsApp,
+  maxSoundsInSet: state.sheetsApp.maxSoundsInSet,
+  showKeyNames: state.sheetsApp.showKeyNames,
+  isNextSetAfterGuessAll: state.sheetsApp.isNextSetAfterGuessAll,
+  sheetsToDraw: state.sheetsApp.sheetsToDraw,
+  clef: state.sheetsApp.clefs[0],
 });
 
 const mapDispatchToProps = dispatch => ({

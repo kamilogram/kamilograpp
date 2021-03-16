@@ -9,34 +9,49 @@ import PianoKeyboard from '../PianoKeyboard/PianoKeyboard.js';
 import { IS_MENU, IS_KEY_NAMES_BUTTONS_COMP } from '../../js/appConstans.js';
 
 
-const SheetsApp = ({ sheetsAppState, onPianoKeyClick, onClick, startPianoKey, endPianoKey, areTwoClefs }) => {
-
+const SheetsApp = ({ 
+  sheetsAppState, 
+  onPianoKeyClick, 
+  onClick, 
+  startPianoKey, 
+  endPianoKey, 
+  areTwoClefs,
+  isTreble,
+  isBass,
+}) => {
   const classes = classNames(
     'SheetsApp', { withoutMenu: !IS_MENU }
   );
 
   const sheetsClasses = classNames(
     { 'oneOfClefs' : areTwoClefs }
-  );
+    );
+  console.log('sheetsAppState: ', sheetsAppState)
 
   return (
     <div
       className={classes}
       onClick={onClick}>
 
-      <Sheets
-        className={sheetsClasses}
-        musicKey={sheetsAppState.musicKey}
-        sheetSets={sheetsAppState.sheetSets}
-        actualSheetSet={sheetsAppState.actualSheetSet}
-        clef='treble'/>
+      {isTreble && (
+        <Sheets
+          className={sheetsClasses}
+          musicKey={sheetsAppState.musicKey}
+          sheetSets={sheetsAppState.sheetSets}
+          actualSheetSet={sheetsAppState.actualSheetSet}
+          clef='treble'/>
+        )
+      }
 
-      {/* <Sheets
-        className={sheetsClasses}
-        musicKey={sheetsAppState.musicKey}
-        sheetSets={sheetsAppState.sheetSets}
-        actualSheetSet={sheetsAppState.actualSheetSet}
-        clef='bass'/> */}
+      {isBass && (
+        <Sheets
+          className={sheetsClasses}
+          musicKey={sheetsAppState.musicKey}
+          sheetSets={sheetsAppState.sheetSets}
+          actualSheetSet={sheetsAppState.actualSheetSet}
+          clef='bass'/>
+        )
+      }
 
       {IS_KEY_NAMES_BUTTONS_COMP &&
         <KeyboardButtonsNames
@@ -62,7 +77,7 @@ SheetsApp.propTypes = {
 }
 
 SheetsApp.defaultProps = {
-  areTwoClefs: true,
+  areTwoClefs: false,
 };
 
 export default SheetsApp;

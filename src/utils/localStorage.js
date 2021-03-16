@@ -2,17 +2,18 @@ import defaultStates from '../js/defaultAppStates';
 import _ from 'lodash';
 
 export const loadState = () => {
-  // try {
-  //   const serializedState = localStorage.getItem('state');
-  //   console.log("serializedState: ", serializedState);
-  //   if(serializedState === null) {
-  //     return defaultStates;
-  //   }
-  //   return _.merge(defaultStates, JSON.parse(serializedState));
-  // } catch (err) {
-  //   console.log("error load state: ", err);
-  //   return defaultStates;
-  // }
+  try {
+    const serializedState = localStorage.getItem('state');
+    // console.log("serializedState: ", serializedState);
+    if(serializedState === null) {
+      console.log(defaultStates)
+      return defaultStates;
+    }
+    return _.merge(defaultStates, JSON.parse(serializedState));
+  } catch (err) {
+    console.log("error load state: ", err);
+    return defaultStates;
+  }
 };
 
 export const saveState = state => {

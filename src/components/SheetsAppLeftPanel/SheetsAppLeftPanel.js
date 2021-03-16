@@ -3,26 +3,46 @@ import './SheetsAppLeftPanel.css';
 import SideUnit from '../SideUnit/SideUnit';
 import musicConsts from '../../musicTheory/musicConstans.js';
 const musicKeysOrder = musicConsts.MUSIC_KEYS_ORDER;
+const trebleFrom = musicConsts.TREBLE_CLEF_FROM;
+const trebleTo = musicConsts.TREBLE_CLEF_TO;
+const bassFrom = musicConsts.BASS_CLEF_FROM;
+const bassTo = musicConsts.BASS_CLEF_TO;
 const trebleMarks = musicConsts.TREBLE_CLEF_RANGE_MARKS;
+const bassMarks = musicConsts.BASS_CLEF_RANGE_MARKS;
 import UneditableIntegerInput from '../UneditableIntegerInput/UneditableIntegerInput';
 import Button from '../Button/Button';
 import mh from '../../utils/musicHelpers.js';
 import {
   MIN_SOUNDS_AMOUNT_IN_ONE_SET,
   MAX_SOUNDS_AMOUNT_IN_ONE_SET,
-  TREBLE_CLEF_FROM,
-  TREBLE_CLEF_TO,
 } from '../../js/appConstans.js';
 import PropTypes from 'prop-types';
 import RangeSlider from '../RangeSlider/RangeSlider';
 
 
-const SheetsAppLeftPanel = props => {
+const SheetsAppLeftPanel = ({
+  maxSoundsInSet,
+  showKeyNames,
+  isNextSetAfterGuessAll,
+  sheetsToDraw,
+  onChangeMusicKey,
+  onChangeMaxSoundInSetAmount,
+  onToggleMusicKeyNamesVis,
+  onChangeSwitchingNextSetMode,
+  onClefToggle,
+  onChangeSheetsRange,
+  clef,
+}) => {
 
   const renderGoingToTheNextSetMode = mode => {
     const text = mode ? 'aż do odgadnięcia wszystkich nut.' : 'tyle ile nut.'
     return 'Ilość prób: ' + text;
   };
+
+  const clefScope = {
+    from: clef === "treble" ? trebleFrom : bassFrom,
+    to: clef === "treble" ? trebleTo : bassTo,
+  }
 
   return (
     <div className='SheetsAppLeftPanel'>
@@ -33,15 +53,16 @@ const SheetsAppLeftPanel = props => {
           <Button
             key={musicKeyButton}
             name={musicKeyButton}
-            onClick={props.onChangeMusicKey.bind(null, musicKeyButton)} />
+            onClick={onChangeMusicKey.bind(null, musicKeyButton)}
+          />
         ))}
       </SideUnit>
 
       <SideUnit
         name='Ilość nut jednocześnie'>
         <UneditableIntegerInput
-          value={props.sheetsAppState.maxSoundsInSet}
-          onClick={diff => props.onChangeMaxSoundInSetAmount(diff)}
+          value={maxSoundsInSet}
+          onClick={diff => onChangeMaxSoundInSetAmount(diff)}
           min={MIN_SOUNDS_AMOUNT_IN_ONE_SET}
           max={MAX_SOUNDS_AMOUNT_IN_ONE_SET}/>
       </SideUnit>
@@ -49,15 +70,15 @@ const SheetsAppLeftPanel = props => {
       <SideUnit
         name='Oznaczenia na klawiaturze'>
         <Button
-          name={props.sheetsAppState.showKeyNames ? 'ukryj' : 'pokaż'}
-          onClick={props.onToggleMusicKeyNamesVis} />
+          name={showKeyNames ? 'ukryj' : 'pokaż'}
+          onClick={onToggleMusicKeyNamesVis} />
       </SideUnit>
 
       <SideUnit
-        name={renderGoingToTheNextSetMode(props.sheetsAppState.isNextSetAfterGuessAll)}>
+        name={renderGoingToTheNextSetMode(isNextSetAfterGuessAll)}>
         <Button
           name='zmień'
-          onClick={props.onChangeSwitchingNextSetMode} />
+          onClick={onChangeSwitchingNextSetMode} />
       </SideUnit>
 
       <SideUnit
@@ -66,22 +87,22 @@ const SheetsAppLeftPanel = props => {
           <Button
             key={clef + 'Clef'}
             name={clef === 'treble' ? 'wiolinowy' : 'basowy'}
-            onClick={clef => props.onClefToggle(clef)} />
+            onClick={() => onClefToggle(clef)} />
         )}
       </SideUnit>
 
       <SideUnit name='Zakres nut'>
         <RangeSlider
           min={0}
-          max={mh.calcSoundNumberFromScopeByName(TREBLE_CLEF_FROM, TREBLE_CLEF_TO)}
+          max={mh.calcSoundNumberFromScopeByName(clefScope.from, clefScope.to)}
           step={null}
-          marks={trebleMarks}
-          onAfterChange={props.onChangeSheetsRange}
+          marks={clef === 'treble' ? trebleMarks : bassMarks}
+          onAfterChange={onChangeSheetsRange}
           allowCross={false}
-          pushable={props.sheetsAppState.maxSoundsInSet * 2 - 1}
+          pushable={maxSoundsInSet * 2 - 1}
           defaultValue={[
-            mh.calcSoundNumberFromScopeByName(TREBLE_CLEF_FROM,  props.sheetsAppState.sheetsToDraw.from),
-            mh.calcSoundNumberFromScopeByName(TREBLE_CLEF_FROM,  props.sheetsAppState.sheetsToDraw.to),
+            mh.calcSoundNumberFromScopeByName(clefScope.from,  sheetsToDraw.from),
+            mh.calcSoundNumberFromScopeByName(clefScope.from,  sheetsToDraw.to),
           ]} />
       </SideUnit>
 
@@ -90,7 +111,10 @@ const SheetsAppLeftPanel = props => {
 }
 
 SheetsAppLeftPanel.propTypes = {
-  sheetsAppState: PropTypes.object.isRequired,
+  maxSoundsInSet: PropTypes.number.isRequired,
+  showKeyNames: PropTypes.bool.isRequired,
+  isNextSetAfterGuessAll: PropTypes.bool.isRequired,
+  sheetsToDraw: PropTypes.object.isRequired,
   onChangeMusicKey: PropTypes.func.isRequired,
   onChangeMaxSoundInSetAmount: PropTypes.func.isRequired,
   onToggleMusicKeyNamesVis: PropTypes.func.isRequired,

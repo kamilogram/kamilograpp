@@ -16,8 +16,12 @@ const defaultStates = {
     currentTriesAmount: 0,
     sheetsToDraw: {
       from: 'A3',
-      to: 'C6'
+      to: 'F5'
     },
+    actualScope: {
+      from: 0,
+      to: 12,
+    }
   },
   sidePanels: {
     leftPanel: {

@@ -17,7 +17,6 @@ const OneSetOfSheets = ({className, emptyStavesAmount, ...rest}) => {
     props.musicKeyNames.map((musicKeyName, index) =>
     {
       const chroma = mh.isWithChromas(musicKeyName, props.musicKey);
-
       return (
         <div key={musicKeyName + index}
           className='oneSheetWithChroma'>

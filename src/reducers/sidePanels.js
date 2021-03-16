@@ -1,4 +1,6 @@
-const sidePanels = (state = {}, action) => {
+import defaultStates from "../js/defaultAppStates";
+
+const sidePanels = (state=defaultStates, action) => {
   switch (action.type) {
     case 'TOGGLE_PANEL_VISIBILITY':
       if (action.panel === 'leftPanel') {

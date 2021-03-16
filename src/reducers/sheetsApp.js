@@ -4,18 +4,21 @@ import _ from 'lodash';
 import {
   MIN_SOUNDS_AMOUNT_IN_ONE_SET,
   MAX_SOUNDS_AMOUNT_IN_ONE_SET,
-  TREBLE_CLEF_FROM,
 } from '../js/appConstans.js';
 import musicConsts from '../musicTheory/musicConstans';
 const LAST_SOUND = musicConsts.LAST_SOUND;
+const trebleFrom = musicConsts.TREBLE_CLEF_FROM;
+const bassFrom = musicConsts.BASS_CLEF_FROM;
 
 const drawSheetSets = (state, mk, mx, std) => {
   const musicKey = mk || state.musicKey;
   const maxSoundsInSet = mx || state.maxSoundsInSet;
   const sheetsToDraw = std || state.sheetsToDraw;
-  return _.map(Array(state.sheetSets.length), soundsArray =>
+  const aaa = _.map(Array(state.sheetSets.length), soundsArray =>
     mh.drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw)
   );
+  console.log('aaa: ', aaa);
+  return aaa
 }
 
 const countMaxSoundsInSetAmount = (diff, state) => {
@@ -73,12 +76,9 @@ const checkToGoToTheNextSet = (isSoundGuessed, state) => {
   }
 }
 
-const toggleClefs = (state, clefToToggle)=> {
-  console.log("state.clefs: ", state.clefs);
-  console.log("clefToToggle: ", clefToToggle);
-  const currentClefs = state.clefs;
-  if (_.find(state.clefs, clefToToggle))
-    console.log("znalazłem");
+const toggleClefs = (clefs, clefToToggle)=> {
+  //TODO jak będą dwa klucze na raz to zmienić logikę
+  return [clefToToggle];
 }
 
 const sheetsApp = (state = {}, action) => {
@@ -94,7 +94,6 @@ const sheetsApp = (state = {}, action) => {
         badSounds: [],
       };
     case 'RENDER_NEW_SHEET_SETS':
-
       return {
         ...state,
         sheetSets: drawSheetSets(state, action.musicKey),
@@ -105,7 +104,6 @@ const sheetsApp = (state = {}, action) => {
       };
     case 'CHANGE_MAX_SOUNDS_IN_ONE_SET_AMOUNT':
       const newMaxSoundsInSetAmount = countMaxSoundsInSetAmount(action.diff, state);
-      console.log("action.diff: ", action.diff);
       if(newMaxSoundsInSetAmount !== state.maxSoundsInSet)
         return {
           ...state,
@@ -165,9 +163,11 @@ const sheetsApp = (state = {}, action) => {
         badSounds: [],
       };
     case 'CHANGE_SHEETS_RANGE':
-      const newFrom = mh.calcSoundNameFromScopeByNumber(TREBLE_CLEF_FROM, action.from, LAST_SOUND);
-      const newTo = mh.calcSoundNameFromScopeByNumber(TREBLE_CLEF_FROM, action.to, LAST_SOUND);
-      const newSheetsToDraw = {
+      let clef = state.clefs[0];
+      let clefFrom = clef === 'treble' ? trebleFrom : bassFrom;
+      let newFrom = mh.calcSoundNameFromScopeByNumber(clefFrom, action.from, LAST_SOUND);
+      let newTo = mh.calcSoundNameFromScopeByNumber(clefFrom, action.to, LAST_SOUND);
+      let newSheetsToDraw = {
         from: newFrom,
         to: newTo,
       };
@@ -179,16 +179,29 @@ const sheetsApp = (state = {}, action) => {
         guessedSounds: [],
         badSounds: [],
         sheetsToDraw: newSheetsToDraw,
+        actualScope: {
+          from: action.from,
+          to: action.to,
+        }
       };
     case 'TOGGLE_CLEF':
+      clef = action.clef;
+      clefFrom = clef === 'treble' ? trebleFrom : bassFrom;
+      newFrom = mh.calcSoundNameFromScopeByNumber(clefFrom, state.actualScope.from, LAST_SOUND);
+      newTo = mh.calcSoundNameFromScopeByNumber(clefFrom, state.actualScope.to, LAST_SOUND);
+      newSheetsToDraw = {
+        from: newFrom,
+        to: newTo,
+      };
       return {
         ...state,
-        clefs: toggleClefs(state, action.clef),
-        sheetSets: drawSheetSets(state),
+        clefs: toggleClefs(state.clefs, action.clef),
+        sheetSets: drawSheetSets(...[state, , , newSheetsToDraw]),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],
         badSounds: [],
+        sheetsToDraw: newSheetsToDraw,
       };
 
     default:

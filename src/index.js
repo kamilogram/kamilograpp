@@ -2,7 +2,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import { render } from 'react-dom'
 import App from './App';
-import './index.css';
+// import './index.css';
 import { createStore } from 'redux';
 import reducers from './reducers/index';
 import { Provider } from 'react-redux';
@@ -12,6 +12,7 @@ import throttle from 'lodash/throttle';
 const store = createStore(reducers, loadState());
 
 store.subscribe(throttle(() => {
+  console.log('store.getState(): ', store.getState());
   saveState(store.getState())
 }, 1000));
 

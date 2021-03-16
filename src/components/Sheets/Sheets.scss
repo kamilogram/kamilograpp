@@ -13,7 +13,7 @@
     position: relative;
 
     .preambule {
-      position: relative;
+      position: absolute;
 
       .trebleClef {
         height: 0.8em;
@@ -22,6 +22,12 @@
         left: 0.1em;
       }
 
+      .bassClef {
+        height: 0.47em;
+        position: absolute;
+        top: 0.69em;
+        left: 0.1em;
+      }
     }
 
     .sheetsField {
@@ -44,9 +50,9 @@
     }
 
     &.oneOfClefs {
-      font-size: 101px;
-      height: 160px;
-      line-height: 262.4px;
+      // font-size: 101px;
+      // height: 160px;
+      // line-height: 262.4px;
     }
 
 

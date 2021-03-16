@@ -9,7 +9,6 @@ const MainAreaContainer = () => {
   return (
     <div className='MainAreaContainer'>
       <MainArea>
-
         <SheetsAppContainer
           left={
             <SheetsAppLeftPanelContainer />

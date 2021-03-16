@@ -11,5 +11,3 @@ export const MENU_ITEMS = [
   'Akordy teoria',
   'Akordy gra',
 ];
-export const TREBLE_CLEF_FROM = 'A3';
-export const TREBLE_CLEF_TO = 'C6';

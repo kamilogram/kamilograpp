@@ -1,4 +1,9 @@
 export default {
+  //stave - pięciolinia
+  //key - tonacja (klucz)
+  //chroma - sharpy i flaty
+  //clef - klucz (wiolinowy lub basowy)
+  //pitch - jedna linia z pięciolinii
   BASIC_SOUND_NAMES: ['C', 'D', 'E', 'F', 'G', 'A', 'B',],
   BASIC_SOUND_NAMES_H: ['C', 'D', 'E', 'F', 'G', 'A', 'H',],
   BASIC_SOUND_NAMES_PLUS_SHARPS:
@@ -17,12 +22,16 @@ export default {
   },
   CHROMATIC_SOUNDS_ORDER: {
     'sharp': ['F', 'C', 'G', 'D', 'A', 'E'],
-    'flat' : ['B', 'E', 'A', 'D', 'G', 'C'],
+    'flat': ['B', 'E', 'A', 'D', 'G', 'C'],
   },
   MUSIC_KEYS_ORDER: [
     'C', 'G', 'D', 'A', 'E', 'B', /*'F#',*/ 'F', 'Bb', 'Eb', 'Ab', 'Db', /*'Gb'*/
   ],
   LAST_SOUND: 'C8',
+  TREBLE_CLEF_FROM: 'A3',
+  TREBLE_CLEF_TO: 'C6',
+  BASS_CLEF_FROM: 'C2',
+  BASS_CLEF_TO: 'E4',
 
   MUSIC_KEYS: {
     'C': 0,
@@ -53,6 +62,15 @@ export default {
     16: 'C6',
   },
 
+  BASS_CLEF_RANGE_MARKS: {
+    0: 'C2',
+    2: 'E2',
+    4: 'G2',
+    9: 'E3',
+    12: 'A3',
+    16: 'E4',
+  },
+
   MUSIC_FONT_DIC: {
     trebleClef: {
       fontKey: '`',
@@ -76,7 +94,24 @@ export default {
       fontKey: 'M',
     },
 
-
+    '2d': {
+      fontKey: {
+        quarter: 'a',
+        sharp: 'Z',
+        flat: 'z',
+      },
+      treble: 'A3',
+      bass: 'C2',
+    },
+    '1.5d': {
+      fontKey: {
+        quarter: 's',
+        sharp: 'X',
+        flat: 'x',
+      },
+      treble: 'B3',
+      bass: 'D2',
+    },
     '1d': {
       fontKey: {
         quarter: '1',
@@ -219,24 +254,6 @@ export default {
       },
       treble: 'C6',
       bass: 'E4',
-    },
-    '2d': {
-      fontKey: {
-        quarter: 'a',
-        sharp: 'Z',
-        flat: 'z',
-      },
-      treble: 'A3',
-      bass: 'C2',
-    },
-    '1.5d': {
-      fontKey: {
-        quarter: 's',
-        sharp: 'X',
-        flat: 'x',
-      },
-      treble: 'B3',
-      bass: 'D2',
     },
   },
 

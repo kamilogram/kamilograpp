@@ -8,6 +8,7 @@ import OneSetOfSheets from '../OneSetOfSheets/OneSetOfSheets.js';
 import Image from '../Image/Image.js';
 import mh from '../../utils/musicHelpers.js';
 import trebleClef from '../../../resources/images/trebleClef.png';
+import bassClef from '../../../resources/images/bassClef.png';
 
 const TrebleClef = () => {
   return (
@@ -25,8 +26,12 @@ const TrebleClef = () => {
 const BassClef = () => {
   return (
     <span className='clef'>
-      {mh.getSign('bassClef')}
-      {mh.getStave()}
+      {mh.getStave(4)}
+      <Image
+        className='bassClef hhh'
+        src={bassClef}
+        alt='bassClef'
+      />
     </span>
   )
 }
@@ -49,6 +54,7 @@ const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'})
           musicKeyNames={sheetSet}
           // emptyStavesAmount={emptyStavesAmount}
           musicKey={musicKey}
+          clef={clef}
         />
       );
     });
