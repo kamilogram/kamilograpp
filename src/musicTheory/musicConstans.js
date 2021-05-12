@@ -4,6 +4,7 @@ export default {
   //chroma - sharpy i flaty
   //clef - klucz (wiolinowy lub basowy)
   //pitch - jedna linia z pięciolinii
+  //set - nuty w jednym dźwięku (od 1 do 3 lub więcej nut) na raz
   BASIC_SOUND_NAMES: ['C', 'D', 'E', 'F', 'G', 'A', 'B',],
   BASIC_SOUND_NAMES_H: ['C', 'D', 'E', 'F', 'G', 'A', 'H',],
   BASIC_SOUND_NAMES_PLUS_SHARPS:
@@ -70,6 +71,22 @@ export default {
     12: 'A3',
     16: 'E4',
   },
+
+  BOTH_CLEFS_RANGE_MARKS: {
+    0: 'C2',
+    2: 'E2',
+    4: 'G2',
+    9: 'E3',
+    12: 'A3',
+    16: 'E4',
+    21: 'C5',
+    24: 'F5',
+    28: 'C6',
+  },
+
+  NOTES_BETWEEN_STAVES: [
+    'Ab3', 'A3', 'A#3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4', 'D4', 'D#4', 'Eb4', 'E4',
+  ],
 
   MUSIC_FONT_DIC: {
     trebleClef: {

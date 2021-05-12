@@ -4,6 +4,9 @@ import PianoKey from '../PianoKey/PianoKey.js';
 import PropTypes from 'prop-types';
 import mh from '../../utils/musicHelpers.js';
 
+//TODO znaki chromatyczne ### i bbb są w bass clef na złej wysokości!!!!!
+
+//TODO czarne klawisze się nie podświetlają na zielono lub czerwono!!!
 
 const PianoKeyboard = ({ from, to, appState, onPianoClick }) => {
   const soundNames = mh.generateKeysArray(from, to, true);

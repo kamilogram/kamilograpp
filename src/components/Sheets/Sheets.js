@@ -38,11 +38,8 @@ const BassClef = () => {
 
 
 const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'}) => {
-
   const renderSheetSets = (sheetSets, actualSheetSet, musicKey) => {
-
     return _.map(sheetSets, (sheetSet, index) => {
-
       const classes = classNames({
         actualSet: actualSheetSet === index,
       });
@@ -69,7 +66,7 @@ const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'})
 
   //TODO clef i sign i highlightActual (nowy) jako propsy
   return (
-    <div className='SheetsContainer'>
+    <div className='SheetsSetContainer'>
       <div className={classes}>
         <span className='preambule'>
           {vert}

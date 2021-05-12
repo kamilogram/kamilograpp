@@ -25,33 +25,34 @@ const SheetsApp = ({
 
   const sheetsClasses = classNames(
     { 'oneOfClefs' : areTwoClefs }
-    );
+  );
   console.log('sheetsAppState: ', sheetsAppState)
 
   return (
     <div
       className={classes}
       onClick={onClick}>
+        <div className='SheetsContainer'>
+          {isTreble && (
+            <Sheets
+              className={sheetsClasses}
+              musicKey={sheetsAppState.musicKey}
+              sheetSets={sheetsAppState.sheetSets}
+              actualSheetSet={sheetsAppState.actualSheetSet}
+              clef='treble'/>
+            )
+          }
 
-      {isTreble && (
-        <Sheets
-          className={sheetsClasses}
-          musicKey={sheetsAppState.musicKey}
-          sheetSets={sheetsAppState.sheetSets}
-          actualSheetSet={sheetsAppState.actualSheetSet}
-          clef='treble'/>
-        )
-      }
-
-      {isBass && (
-        <Sheets
-          className={sheetsClasses}
-          musicKey={sheetsAppState.musicKey}
-          sheetSets={sheetsAppState.sheetSets}
-          actualSheetSet={sheetsAppState.actualSheetSet}
-          clef='bass'/>
-        )
-      }
+          {isBass && (
+            <Sheets
+              className={sheetsClasses}
+              musicKey={sheetsAppState.musicKey}
+              sheetSets={sheetsAppState.sheetSets}
+              actualSheetSet={sheetsAppState.actualSheetSet}
+              clef='bass'/>
+            )
+          }
+      </div>
 
       {IS_KEY_NAMES_BUTTONS_COMP &&
         <KeyboardButtonsNames

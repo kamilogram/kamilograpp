@@ -3,24 +3,24 @@ const defaultStates = {
     'currentPage': 'Nuty gra',
   },
   sheetsApp: {
-    musicKey: 'C',
-    clefs: ['treble'],
+    musicKey: 'B',
+    clefs: 'both',
     sheetSets: [['C4'], ['D4'], ['E4'], ['F4']],
-    maxSoundsInSet: 1,
+    maxSoundsInSet: 3,
     actualSheetSet: 0,
     guessedSounds: [],
     badSounds: [],
     chromas: 'both',
-    showKeyNames: true,
+    showKeyNames: false,
     isNextSetAfterGuessAll: true,
     currentTriesAmount: 0,
     sheetsToDraw: {
-      from: 'A3',
-      to: 'F5'
+      from: 'E3',
+      to: 'A4'
     },
     actualScope: {
       from: 0,
-      to: 12,
+      to: 16,
     }
   },
   sidePanels: {

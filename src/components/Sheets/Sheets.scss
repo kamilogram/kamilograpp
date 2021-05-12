@@ -1,12 +1,18 @@
 @import "../../styles/constans.scss";
 
-.SheetsContainer {
+.SheetsSetContainer {
   display: flex;
   justify-content: center;
 
+  &.bassWhenBoth {
+    position: absolute;
+    left: 33.5%;
+    top: 19.5%;
+  }
+
   .Sheets {
     font-family: NewTypeMyMusic;
-    font-size: 110px;
+    font-size: 97px;
     display: inline-flex;
     justify-content: center;
     margin-bottom: -6px;

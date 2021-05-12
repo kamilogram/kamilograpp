@@ -7,6 +7,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .SheetsContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-height: 43%;
+  
+    &.bassWhenBoth {
+      position: absolute;
+      left: 33.5%;
+      top: 19.5%;
+    }
 }
 
 .SheetsApp.withoutMenu {

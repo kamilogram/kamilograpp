@@ -9,6 +9,7 @@ const bassFrom = musicConsts.BASS_CLEF_FROM;
 const bassTo = musicConsts.BASS_CLEF_TO;
 const trebleMarks = musicConsts.TREBLE_CLEF_RANGE_MARKS;
 const bassMarks = musicConsts.BASS_CLEF_RANGE_MARKS;
+const bothMarks = musicConsts.BOTH_CLEFS_RANGE_MARKS;
 import UneditableIntegerInput from '../UneditableIntegerInput/UneditableIntegerInput';
 import Button from '../Button/Button';
 import mh from '../../utils/musicHelpers.js';
@@ -38,6 +39,17 @@ const SheetsAppLeftPanel = ({
     const text = mode ? 'aż do odgadnięcia wszystkich nut.' : 'tyle ile nut.'
     return 'Ilość prób: ' + text;
   };
+
+  const getClefName = clef => {
+    switch (clef) {
+      case 'treble':
+        return 'wiolinowy';
+      case 'bass':
+        return 'basowy';
+      case 'both':
+        return 'oba';
+    }
+  }
 
   const clefScope = {
     from: clef === "treble" ? trebleFrom : bassFrom,
@@ -83,10 +95,10 @@ const SheetsAppLeftPanel = ({
 
       <SideUnit
         name='Klucz'>
-        {['treble', 'bass'].map(clef =>
+        {['treble', 'bass', 'both'].map(clef =>
           <Button
             key={clef + 'Clef'}
-            name={clef === 'treble' ? 'wiolinowy' : 'basowy'}
+            name={getClefName(clef)}
             onClick={() => onClefToggle(clef)} />
         )}
       </SideUnit>
@@ -94,9 +106,11 @@ const SheetsAppLeftPanel = ({
       <SideUnit name='Zakres nut'>
         <RangeSlider
           min={0}
-          max={mh.calcSoundNumberFromScopeByName(clefScope.from, clefScope.to)}
+          // max={mh.calcSoundNumberFromScopeByName(clefScope.from, clefScope.to)}
+          max={mh.calcSoundNumberFromScopeByName(bassFrom, trebleTo)}
           step={null}
-          marks={clef === 'treble' ? trebleMarks : bassMarks}
+          // marks={clef === 'treble' ? trebleMarks : bassMarks}
+          marks={bothMarks}
           onAfterChange={onChangeSheetsRange}
           allowCross={false}
           pushable={maxSoundsInSet * 2 - 1}

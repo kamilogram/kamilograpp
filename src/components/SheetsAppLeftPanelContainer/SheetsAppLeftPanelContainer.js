@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   showKeyNames: state.sheetsApp.showKeyNames,
   isNextSetAfterGuessAll: state.sheetsApp.isNextSetAfterGuessAll,
   sheetsToDraw: state.sheetsApp.sheetsToDraw,
-  clef: state.sheetsApp.clefs[0],
+  clef: state.sheetsApp.clefs,
 });
 
 const mapDispatchToProps = dispatch => ({
