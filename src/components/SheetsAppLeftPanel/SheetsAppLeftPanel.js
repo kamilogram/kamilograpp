@@ -22,6 +22,7 @@ import RangeSlider from '../RangeSlider/RangeSlider';
 
 
 const SheetsAppLeftPanel = ({
+  musicKey,
   maxSoundsInSet,
   showKeyNames,
   isNextSetAfterGuessAll,
@@ -66,6 +67,7 @@ const SheetsAppLeftPanel = ({
             key={musicKeyButton}
             name={musicKeyButton}
             onClick={onChangeMusicKey.bind(null, musicKeyButton)}
+            className={musicKey === musicKeyButton ? 'chosen' : ''}
           />
         ))}
       </SideUnit>
@@ -95,11 +97,13 @@ const SheetsAppLeftPanel = ({
 
       <SideUnit
         name='Klucz'>
-        {['treble', 'bass', 'both'].map(clef =>
+        {['treble', 'bass', 'both'].map(buttonClef =>
           <Button
-            key={clef + 'Clef'}
-            name={getClefName(clef)}
-            onClick={() => onClefToggle(clef)} />
+            key={buttonClef + 'Clef'}
+            name={getClefName(buttonClef)}
+            onClick={() => onClefToggle(buttonClef)}
+            className={clef === buttonClef ? 'chosen' : ''}
+          />
         )}
       </SideUnit>
 

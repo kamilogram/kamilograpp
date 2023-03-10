@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
   isNextSetAfterGuessAll: state.sheetsApp.isNextSetAfterGuessAll,
   sheetsToDraw: state.sheetsApp.sheetsToDraw,
   clef: state.sheetsApp.clefs,
+  musicKey: state.sheetsApp.musicKey,
 });
 
 const mapDispatchToProps = dispatch => ({

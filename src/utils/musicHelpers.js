@@ -327,6 +327,7 @@ export default {
     const currentSheetsAmount = _.random(1, maxSoundsInSet);
     const defaultSounds = this.generateKeysArray(sheetsToDraw.from, sheetsToDraw.to);
     const drawedValues = h.drawUniqueAndFarEnoughValues(currentSheetsAmount, 0, defaultSounds.length - 1);
+    const clefsTemporaryBorder = _.random(0, notesBetweenStaves.length - 1)
     return _.map(Array(currentSheetsAmount), (sound, index) => {
       console.log('DRAW ONE SOUND');
       return this.drawOneSound(
@@ -334,6 +335,7 @@ export default {
         defaultSounds,
         _.get(drawedValues, [index]),
         areBothClefs,
+        clefsTemporaryBorder,
       )
     });
   },
@@ -346,10 +348,10 @@ export default {
    * @param {boolean} areBothClefs 
    * @returns 
    */
-  drawOneSound(musicKey, defaultSounds, value, areBothClefs) {
+  drawOneSound(musicKey, defaultSounds, value, areBothClefs, clefsBorder) {
     const soundsInThisMusicKey = this.changeSoundsWithMusicKeyChromas(defaultSounds, musicKey);
     const output = _.get(soundsInThisMusicKey, value);
-    return this.setNoteIntoOneStaveWhenBetweenTwoStaves(output, areBothClefs);
+    return this.setNoteIntoOneStaveWhenBetweenTwoStaves(output, areBothClefs, clefsBorder);
   },
 
   changeSoundsWithMusicKeyChromas(defaultSounds, musicKey) {
@@ -376,7 +378,7 @@ export default {
    * @param {boolean} areBothClefs 
    * @returns 
    */
-  setNoteIntoOneStaveWhenBetweenTwoStaves(note, areBothClefs) {
+  setNoteIntoOneStaveWhenBetweenTwoStaves(note, areBothClefs, clefsBorder) {
     if (!areBothClefs) {
       return note;
     }
@@ -386,8 +388,7 @@ export default {
       return note;
     }
 
-    const stave = _.random(1);
-    return stave ? `${note}-up` : `${note}-down`
+    return _.indexOf(notesBetweenStaves, note) > clefsBorder ? `${note}-up` : `${note}-down`
   },
 
   insertChromaIntoSound(soundName, musicKey) {

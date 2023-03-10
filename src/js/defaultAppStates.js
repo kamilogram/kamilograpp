@@ -3,7 +3,7 @@ const defaultStates = {
     'currentPage': 'Nuty gra',
   },
   sheetsApp: {
-    musicKey: 'B',
+    musicKey: 'C',
     clefs: 'both',
     sheetSets: [['C4'], ['D4'], ['E4'], ['F4']],
     maxSoundsInSet: 3,
