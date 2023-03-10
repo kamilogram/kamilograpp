@@ -64,8 +64,8 @@ export default {
       return cleanedNote;
   },
 
-  getChromaSigns(keyType, i) {
-    const pitches = _.get(pitchConsts, keyType);
+  getChromaSigns(keyType, i, clef) {
+    const pitches = _.get(pitchConsts, [clef, keyType]);
     let iterator = 1;
     return _.map(pitches, pitch => {
       if (iterator > i) return;

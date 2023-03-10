@@ -73,7 +73,7 @@ const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'})
           {mh.getStave()}
           {clef === 'treble' && <TrebleClef />}
           {clef === 'bass' && <BassClef />}
-          <Chromatics musicKey={musicKey} />
+          <Chromatics musicKey={musicKey} clef={clef}/>
           {mh.getStave()}
           {mh.getSign('4-4')}
           {mh.getStave()}

@@ -12,16 +12,16 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    max-height: 43%;
+    max-height: 50%;
   
     &.bassWhenBoth {
       position: absolute;
       left: 33.5%;
       top: 19.5%;
     }
-}
-
-.SheetsApp.withoutMenu {
-  height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT} - 10px);
-  padding-top: calc(#{$MENU_HEIGHT} + 10px);
+  }
+  .withoutMenu {
+    height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT} - 10px);
+    padding-top: calc(#{$MENU_HEIGHT} + 10px);
+  }
 }

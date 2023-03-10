@@ -18,15 +18,21 @@ export default {
   SHARPS: ['C#', 'D#', 'F#', 'G#', 'A#'],
   ALL_SOUNDS_NAMES: ['C', ['C#', 'Db'], 'D', ['D#', 'Eb'], 'E', 'F', ['F#', 'Gb'], 'G', ['G#', 'Ab'], 'A', ['A#', 'Bb'], 'B',],
   CHROMATIC_SIGNS_PITCHES: {
+    treble: {
     'sharp': ['5', '3.5', '0.5u', '4', '2.5', '4.5'],
     'flat': ['3', '4.5', '2.5', '4', '2', '3.5'],
+    },
+    bass: {
+      'sharp': ['4', '2.5', '4.5', '3', '1.5', '3.5'],
+      'flat': ['2', '3.5', '1.5', '3', '1', '2.5'],
+    }
   },
   CHROMATIC_SOUNDS_ORDER: {
     'sharp': ['F', 'C', 'G', 'D', 'A', 'E'],
     'flat': ['B', 'E', 'A', 'D', 'G', 'C'],
   },
   MUSIC_KEYS_ORDER: [
-    'C', 'G', 'D', 'A', 'E', 'B', /*'F#',*/ 'F', 'Bb', 'Eb', 'Ab', 'Db', /*'Gb'*/
+    'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'
   ],
   LAST_SOUND: 'C8',
   TREBLE_CLEF_FROM: 'A3',
