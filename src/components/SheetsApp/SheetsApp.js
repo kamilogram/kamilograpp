@@ -26,7 +26,6 @@ const SheetsApp = ({
   const sheetsClasses = classNames(
     { 'oneOfClefs' : areTwoClefs }
   );
-  console.log('sheetsAppState: ', sheetsAppState)
 
   return (
     <div

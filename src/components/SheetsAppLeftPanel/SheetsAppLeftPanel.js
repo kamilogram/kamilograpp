@@ -3,6 +3,7 @@ import './SheetsAppLeftPanel.css';
 import SideUnit from '../SideUnit/SideUnit';
 import musicConsts from '../../musicTheory/musicConstans.js';
 const musicKeysOrder = musicConsts.MUSIC_KEYS_ORDER;
+const musicKeysButtons = musicConsts.MUSIC_KEYS_BUTTONS;
 const trebleFrom = musicConsts.TREBLE_CLEF_FROM;
 const trebleTo = musicConsts.TREBLE_CLEF_TO;
 const bassFrom = musicConsts.BASS_CLEF_FROM;
@@ -26,14 +27,16 @@ const SheetsAppLeftPanel = ({
   maxSoundsInSet,
   showKeyNames,
   isNextSetAfterGuessAll,
-  sheetsToDraw,
+  clef,
+  actualScope,
+  randomizeKeys,
   onChangeMusicKey,
   onChangeMaxSoundInSetAmount,
   onToggleMusicKeyNamesVis,
   onChangeSwitchingNextSetMode,
   onClefToggle,
   onChangeSheetsRange,
-  clef,
+  onRandomizeKeys,
 }) => {
 
   const renderGoingToTheNextSetMode = mode => {
@@ -52,47 +55,55 @@ const SheetsAppLeftPanel = ({
     }
   }
 
-  const clefScope = {
-    from: clef === "treble" ? trebleFrom : bassFrom,
-    to: clef === "treble" ? trebleTo : bassTo,
-  }
 
   return (
     <div className='SheetsAppLeftPanel'>
 
       <SideUnit
         name='Tonacja'>
-        {musicKeysOrder.map(musicKeyButton => (
+        {musicKeysOrder.map((musicKeyButton, key) => (
           <Button
             key={musicKeyButton}
-            name={musicKeyButton}
-            onClick={onChangeMusicKey.bind(null, musicKeyButton)}
+            name={musicKeysButtons[key]}
+            onClick={() => onChangeMusicKey(musicKeyButton)}
             className={musicKey === musicKeyButton ? 'chosen' : ''}
           />
         ))}
       </SideUnit>
 
       <SideUnit
+        name='Losowanie tonacji'>
+        <Button
+          value={maxSoundsInSet}
+          onClick={onRandomizeKeys}
+          name={randomizeKeys ? 'przestań losować' : 'losuj'}
+        />
+      </SideUnit>
+
+      <SideUnit
         name='Ilość nut jednocześnie'>
         <UneditableIntegerInput
           value={maxSoundsInSet}
-          onClick={diff => onChangeMaxSoundInSetAmount(diff)}
+          onClick={onChangeMaxSoundInSetAmount}
           min={MIN_SOUNDS_AMOUNT_IN_ONE_SET}
-          max={MAX_SOUNDS_AMOUNT_IN_ONE_SET}/>
+          max={MAX_SOUNDS_AMOUNT_IN_ONE_SET}
+        />
       </SideUnit>
 
       <SideUnit
         name='Oznaczenia na klawiaturze'>
         <Button
           name={showKeyNames ? 'ukryj' : 'pokaż'}
-          onClick={onToggleMusicKeyNamesVis} />
+          onClick={onToggleMusicKeyNamesVis}
+        />
       </SideUnit>
 
       <SideUnit
         name={renderGoingToTheNextSetMode(isNextSetAfterGuessAll)}>
         <Button
           name='zmień'
-          onClick={onChangeSwitchingNextSetMode} />
+          onClick={onChangeSwitchingNextSetMode}
+        />
       </SideUnit>
 
       <SideUnit
@@ -115,13 +126,12 @@ const SheetsAppLeftPanel = ({
           step={null}
           // marks={clef === 'treble' ? trebleMarks : bassMarks}
           marks={bothMarks}
-          onAfterChange={onChangeSheetsRange}
+          onChange={onChangeSheetsRange}
           allowCross={false}
           pushable={maxSoundsInSet * 2 - 1}
-          defaultValue={[
-            mh.calcSoundNumberFromScopeByName(clefScope.from,  sheetsToDraw.from),
-            mh.calcSoundNumberFromScopeByName(clefScope.from,  sheetsToDraw.to),
-          ]} />
+          defaultValue={[actualScope.from, actualScope.to]}
+          value={[actualScope.from, actualScope.to]}
+        />
       </SideUnit>
 
     </div>
@@ -138,6 +148,7 @@ SheetsAppLeftPanel.propTypes = {
   onToggleMusicKeyNamesVis: PropTypes.func.isRequired,
   onChangeSwitchingNextSetMode: PropTypes.func.isRequired,
   onClefToggle: PropTypes.func.isRequired,
+  onRandomizeKeys: PropTypes.func.isRequired,
 };
 
 SheetsAppLeftPanel.defaultProps = {

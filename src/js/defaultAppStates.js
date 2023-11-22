@@ -4,23 +4,24 @@ const defaultStates = {
   },
   sheetsApp: {
     musicKey: 'C',
-    clefs: 'both',
-    sheetSets: [['C4'], ['D4'], ['E4'], ['F4']],
-    maxSoundsInSet: 3,
+    clefs: 'treble',
+    sheetSets: [['E4'], ['F4'], ['G4'], ["A4"]],
+    maxSoundsInSet: 1,
     actualSheetSet: 0,
     guessedSounds: [],
     badSounds: [],
     chromas: 'both',
+    randomizeKeys: false,
     showKeyNames: false,
     isNextSetAfterGuessAll: true,
     currentTriesAmount: 0,
     sheetsToDraw: {
-      from: 'E3',
-      to: 'A4'
+      from: 'E4',
+      to: 'F5'
     },
     actualScope: {
-      from: 0,
-      to: 16,
+      from: 16,
+      to: 24,
     }
   },
   sidePanels: {

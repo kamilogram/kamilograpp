@@ -34,7 +34,8 @@ export default {
   MUSIC_KEYS_ORDER: [
     'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'
   ],
-  LAST_SOUND: 'C8',
+  MUSIC_KEYS_BUTTONS: ['C', 'G (#)', 'D (##)', 'A (###)', 'E (####)', 'B (#####)', 'F# (######)', 'F (b)', 'Bb (bb)', 'Eb (bbb)', 'Ab (bbbb)', 'Db (bbbbb)', 'Gb (bbbbbb)' ],
+  LAST_SOUND: 'C6',
   TREBLE_CLEF_FROM: 'A3',
   TREBLE_CLEF_TO: 'C6',
   BASS_CLEF_FROM: 'C2',
@@ -75,6 +76,7 @@ export default {
     4: 'G2',
     9: 'E3',
     12: 'A3',
+    14: 'C4',
     16: 'E4',
   },
 
@@ -84,11 +86,20 @@ export default {
     4: 'G2',
     9: 'E3',
     12: 'A3',
+    14: 'C4',
     16: 'E4',
     21: 'C5',
     24: 'F5',
     28: 'C6',
   },
+
+  TREBLE_CLEF_FROM_MARK: 12,
+  TREBLE_CLEF_TO_MARK: 28,
+  BASS_CLEF_FROM_MARK: 0,
+  BASS_CLEF_TO_MARK: 16,
+  BOTH_CLEFS_FROM_MARK: 0,
+  BOTH_CLEFS_TO_MARK: 28,
+
 
   NOTES_BETWEEN_STAVES: [
     'Ab3', 'A3', 'A#3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4', 'D4', 'D#4', 'Eb4', 'E4',

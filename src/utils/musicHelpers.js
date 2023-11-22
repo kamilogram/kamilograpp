@@ -5,6 +5,7 @@ const musicDic = musicConsts.MUSIC_FONT_DIC;
 const basicSoundNames = musicConsts.BASIC_SOUND_NAMES;
 const allSoundsNames = musicConsts.ALL_SOUNDS_NAMES;
 const musicKeys = musicConsts.MUSIC_KEYS;
+const musicKeysOrder = musicConsts.MUSIC_KEYS_ORDER;
 const chromaticSoundsOrder = musicConsts.CHROMATIC_SOUNDS_ORDER;
 const pitchConsts = musicConsts.CHROMATIC_SIGNS_PITCHES;
 const notesBetweenStaves = musicConsts.NOTES_BETWEEN_STAVES;
@@ -419,5 +420,9 @@ export default {
     if (mainName <= 'B') return 'B' + number;
     else if (mainName <= 'E') return 'E' + number;
     else return 'B' + number;
-  }
+  },
+
+  getRandomKey() {
+    return musicKeysOrder[_.random(0, musicKeysOrder.length - 1)]
+  },
 }

@@ -8,6 +8,7 @@ import {
   changeSwitchingNextSetMode,
   toggleClef,
   changeSheetsRange,
+  changeRandomizeKeys,
 } from '../../actions/index';
 
 
@@ -18,6 +19,8 @@ const mapStateToProps = state => ({
   sheetsToDraw: state.sheetsApp.sheetsToDraw,
   clef: state.sheetsApp.clefs,
   musicKey: state.sheetsApp.musicKey,
+  actualScope: state.sheetsApp.actualScope,
+  randomizeKeys: state.sheetsApp.randomizeKeys,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -37,8 +40,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeSwitchingNextSetMode())
   },
 
+  onRandomizeKeys() {
+    dispatch(changeRandomizeKeys())
+  },
+
   onClefToggle(clef) {
     dispatch(toggleClef(clef))
+    dispatch(changeSheetsRange())
   },
 
   onChangeSheetsRange(value) {
