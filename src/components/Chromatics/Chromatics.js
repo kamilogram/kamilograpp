@@ -13,7 +13,7 @@ const Chromatics = ({musicKey, clef}) => {
   else if(keyValue < 0) output = mh.getChromaSigns('flat', -keyValue, clef);
 
   return (
-    <span>
+    <span className="chromatics">
       {output}
     </span>
   )

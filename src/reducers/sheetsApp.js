@@ -67,7 +67,7 @@ const goToTheNextSet = state => {
     return {
       ...state,
       actualSheetSet: 0,
-      sheetSets: drawSheetSets(state),
+      sheetSets: drawSheetSets(state, newMusicKey),
       currentTriesAmount: 0,
       musicKey: newMusicKey
     }
@@ -114,7 +114,7 @@ const sheetsApp = (state = {}, action) => {
     case 'CHANGE_MUSIC_KEY':
       return {
         ...state,
-        musicKey: action.musicKey,
+        musicKey: action.musicKey || state.musicKey,
         sheetSets: drawSheetSets(state, action.musicKey),
         actualSheetSet: 0,
         currentTriesAmount: 0,
@@ -255,10 +255,16 @@ const sheetsApp = (state = {}, action) => {
       };
 
     case 'CHANGE_RANDOMIZE_KEYS':
+      let changedMusicKey = state.musicKey;
+      if (state.randomizeKeys && _.random(1, 10) > 6) {
+        changedMusicKey = mh.getRandomKey()
+      }
+
       return {
         ...state,
         randomizeKeys: !state.randomizeKeys,
         musicKey: !state.randomizeKeys ? mh.getRandomKey() : state.musicKey,
+        sheetSets: drawSheetSets(state, changedMusicKey),
       }
 
     default:

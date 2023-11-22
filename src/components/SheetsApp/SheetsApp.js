@@ -70,7 +70,6 @@ const SheetsApp = ({
 
 SheetsApp.propTypes = {
   areTwoClefs: PropTypes.bool,
-
   sheetsAppState: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onPianoKeyClick: PropTypes.func.isRequired,

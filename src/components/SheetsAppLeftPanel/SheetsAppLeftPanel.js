@@ -75,7 +75,10 @@ const SheetsAppLeftPanel = ({
         name='Losowanie tonacji'>
         <Button
           value={maxSoundsInSet}
-          onClick={onRandomizeKeys}
+          onClick={() => {
+            onRandomizeKeys();
+            onChangeMusicKey();
+          }}
           name={randomizeKeys ? 'przestań losować' : 'losuj'}
         />
       </SideUnit>
