@@ -252,15 +252,34 @@ export default {
    * return boolean
    */
   isSoundInArray(sound, soundsArray, musicKey, clear = false) {
-    const soundName = this.isBlackPianoKey(sound)
-    ? this.getBlackSoundWithCurrentChroma(sound, musicKey)
-    : sound;
+    let newSoundsArray = soundsArray;
+    let newSound = sound;
+    if (musicKey === 'F#') {
+      newSoundsArray = _.map(soundsArray, el => {
+        return !_.isArray(el) && _.startsWith(el, 'F') && el.length === 2 ? `E#${_.nth(el, 1)}` : el
+      })
+      newSound = !_.isArray(sound) && _.startsWith(sound, 'F') && sound.length === 2 ? `E#${_.nth(sound, 1)}` : sound;
+    }
 
-    return !!_.findKey(soundsArray, soundFromArray => {
+    if (musicKey === 'Gb') {
+      newSoundsArray = _.map(soundsArray, el => {
+        return !_.isArray(el) && _.startsWith(el, 'B') && el.length === 2 ? `Cb${+_.nth(el, 1) + 1}` : el
+      })
+      newSound = !_.isArray(sound) && _.startsWith(sound, 'B') && sound.length === 2 ? `Cb${+_.nth(sound, 1) + 1}` : sound;
+    }
+
+    const soundName = this.isBlackPianoKey(newSound)
+    ? this.getBlackSoundWithCurrentChroma(newSound, musicKey)
+    : newSound;
+    
+    return !!_.findKey(newSoundsArray, soundFromArray => {
       const clearSoundInArray = this.deleteUpAndDown(soundFromArray)
-      if (this.isBlackPianoKey(clearSoundInArray))
+      if (this.isBlackPianoKey(clearSoundInArray)){
         return _.isEqual(this.getBlackSoundWithCurrentChroma(clearSoundInArray, musicKey), soundName)
-      else return _.isEqual(clearSoundInArray, soundName)
+      }
+      else {
+        return _.isEqual(clearSoundInArray, soundName)
+      }
     })
   },
 
