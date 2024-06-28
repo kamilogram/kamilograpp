@@ -14,6 +14,7 @@ const defaultStates = {
     randomizeKeys: false,
     showKeyNames: false,
     isNextSetAfterGuessAll: true,
+    animation: false,
     currentTriesAmount: 0,
     sheetsToDraw: {
       from: 'E4',

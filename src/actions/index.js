@@ -13,6 +13,10 @@ export const resetClickedSounds = () => ({
   type: 'RESET_CLICKED_SOUNDS',
 });
 
+export const toggleAnimation = () => ({
+  type: 'TOGGLE_ANIMATION',
+});
+
 export const changeMusicKey = musicKey => ({
   type: 'CHANGE_MUSIC_KEY',
   musicKey,

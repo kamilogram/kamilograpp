@@ -1,5 +1,14 @@
 @import "../../styles/constans.scss";
 
+@keyframes move-right-1 {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -50000px; /* Zmień wartość na rzeczywistą szerokość przesunięcia */
+  }
+}
+
 .SheetsSetContainer {
   display: flex;
   justify-content: center;
@@ -12,14 +21,15 @@
 
   .Sheets {
     font-family: NewTypeMyMusic;
-    font-size: 97px;
-    display: inline-flex;
+    font-size: 13vh;
+    display: flex; /* Zmieniono z inline-flex na flex */
     justify-content: center;
     margin-bottom: -6px;
     position: relative;
+    white-space: nowrap; /* Dodano, aby zapobiec zawijaniu się wierszy */
 
     .preambule {
-      position: absolute;
+      position: relative;
 
       .trebleClef {
         height: 0.8em;
@@ -48,6 +58,11 @@
         top: 0;
         width: 100%;
         height: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        left: 0;
+        margin-left: 0;
+        animation: move-right-1 1200s linear infinite; 
       }
     }
 
@@ -56,9 +71,9 @@
     }
 
     &.oneOfClefs {
-      // font-size: 101px;
-      // height: 160px;
-      // line-height: 262.4px;
+      font-size: 101px;
+      height: 160px;
+      line-height: 262.4px;
     }
 
 

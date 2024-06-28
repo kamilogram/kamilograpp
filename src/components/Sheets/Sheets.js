@@ -37,7 +37,7 @@ const BassClef = () => {
 }
 
 
-const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'}) => {
+const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble', animation}) => {
   const renderSheetSets = (sheetSets, actualSheetSet, musicKey) => {
     return _.map(sheetSets, (sheetSet, index) => {
       const classes = classNames({
@@ -80,7 +80,7 @@ const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'})
         </span>
         <span className='sheetsField'>
           <span className='staveField'>
-            {mh.getStave(28)}
+            {mh.getStave(90)}
           </span>
           <div className='SheetSets'>
             {renderSheetSets(sheetSets, actualSheetSet, musicKey)}

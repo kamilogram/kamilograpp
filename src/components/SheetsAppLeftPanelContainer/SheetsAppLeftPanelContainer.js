@@ -3,6 +3,7 @@ import SheetsAppLeftPanel from '../SheetsAppLeftPanel/SheetsAppLeftPanel.js';
 import { connect } from 'react-redux';
 import {
   changeMusicKey,
+  toggleAnimation,
   changeMaxSoundsInOneSetAmount,
   toggleMusicKeyNamesVis,
   changeSwitchingNextSetMode,
@@ -21,11 +22,16 @@ const mapStateToProps = state => ({
   musicKey: state.sheetsApp.musicKey,
   actualScope: state.sheetsApp.actualScope,
   randomizeKeys: state.sheetsApp.randomizeKeys,
+  animation: state.sheetsApp.animation,
 });
 
 const mapDispatchToProps = dispatch => ({
   onChangeMusicKey(musicKey) {
     dispatch(changeMusicKey(musicKey));
+  },
+
+  onToggleAnimation() {
+    dispatch(toggleAnimation());
   },
 
   onChangeMaxSoundInSetAmount(diff) {

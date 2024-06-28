@@ -30,12 +30,12 @@ const bothToMark = musicConsts.BOTH_CLEFS_TO_MARK;
  * @returns array with (wylosowanymi) notes to render on staves
  * e.g. [["C5", "F#4"], ["D3"], ["G2", "D3"], ["G4"]]
  */
-const drawSheetSets = (state, mk, mx, std) => {
+const drawSheetSets = (state, mk, mx, std, sheetSetsAmount = 4) => {
   const musicKey = mk || state.musicKey;
   const maxSoundsInSet = mx || state.maxSoundsInSet;
   const sheetsToDraw = std || state.sheetsToDraw;
   const areBothClefs = state.clefs === 'both';
-  return _.map(Array(state.sheetSets.length), soundsArray =>
+  return _.map(Array(sheetSetsAmount), soundsArray =>
     mh.drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw, areBothClefs)
   );
 }
@@ -121,6 +121,13 @@ const sheetsApp = (state = {}, action) => {
         guessedSounds: [],
         badSounds: [],
       };
+    
+    case 'TOGGLE_ANIMATION':
+      return {
+        ...state,
+        animation: !state.animation,
+        sheetSets: drawSheetSets(state, state.musicKey, state.maxSoundsInSet, state.sheetsToDraw, 1000)
+      }
 
     case 'RENDER_NEW_SHEET_SETS':
       return {

@@ -30,7 +30,9 @@ const SheetsAppLeftPanel = ({
   clef,
   actualScope,
   randomizeKeys,
+  animation,
   onChangeMusicKey,
+  onToggleAnimation,
   onChangeMaxSoundInSetAmount,
   onToggleMusicKeyNamesVis,
   onChangeSwitchingNextSetMode,
@@ -38,7 +40,6 @@ const SheetsAppLeftPanel = ({
   onChangeSheetsRange,
   onRandomizeKeys,
 }) => {
-
   const renderGoingToTheNextSetMode = mode => {
     const text = mode ? 'aż do odgadnięcia wszystkich nut.' : 'tyle ile nut.'
     return 'Ilość prób: ' + text;
@@ -58,7 +59,6 @@ const SheetsAppLeftPanel = ({
 
   return (
     <div className='SheetsAppLeftPanel'>
-
       <SideUnit
         name='Tonacja'>
         {musicKeysOrder.map((musicKeyButton, key) => (
@@ -69,6 +69,15 @@ const SheetsAppLeftPanel = ({
             className={musicKey === musicKeyButton ? 'chosen' : ''}
           />
         ))}
+      </SideUnit>
+
+      <SideUnit
+        name='Animacja'>
+          <Button
+            name={animation ? "wyłącz" : "uruchom"}
+            onClick={onToggleAnimation}
+            className={animation ? 'chosen' : ''}
+          />
       </SideUnit>
 
       <SideUnit
@@ -147,6 +156,7 @@ SheetsAppLeftPanel.propTypes = {
   isNextSetAfterGuessAll: PropTypes.bool.isRequired,
   sheetsToDraw: PropTypes.object.isRequired,
   onChangeMusicKey: PropTypes.func.isRequired,
+  onToggleAnimation: PropTypes.func.isRequired,
   onChangeMaxSoundInSetAmount: PropTypes.func.isRequired,
   onToggleMusicKeyNamesVis: PropTypes.func.isRequired,
   onChangeSwitchingNextSetMode: PropTypes.func.isRequired,

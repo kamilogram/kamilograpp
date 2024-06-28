@@ -20,7 +20,7 @@ const SheetsApp = ({
   isBass,
 }) => {
   const classes = classNames(
-    'SheetsApp', { withoutMenu: !IS_MENU }
+    'SheetsApp', { withoutMenu: !IS_MENU, animateMe: sheetsAppState.animation }, 
   );
 
   const sheetsClasses = classNames(
@@ -38,6 +38,7 @@ const SheetsApp = ({
               musicKey={sheetsAppState.musicKey}
               sheetSets={sheetsAppState.sheetSets}
               actualSheetSet={sheetsAppState.actualSheetSet}
+              animation={sheetsAppState.animation}
               clef='treble'/>
             )
           }
