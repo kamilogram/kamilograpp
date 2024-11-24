@@ -37,12 +37,9 @@ const BassClef = () => {
 }
 
 
-const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'}) => {
-
+const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble', animation}) => {
   const renderSheetSets = (sheetSets, actualSheetSet, musicKey) => {
-
     return _.map(sheetSets, (sheetSet, index) => {
-
       const classes = classNames({
         actualSet: actualSheetSet === index,
       });
@@ -69,21 +66,21 @@ const Sheets = ({className, musicKey, sheetSets, actualSheetSet, clef='treble'})
 
   //TODO clef i sign i highlightActual (nowy) jako propsy
   return (
-    <div className='SheetsContainer'>
+    <div className='SheetsSetContainer'>
       <div className={classes}>
         <span className='preambule'>
           {vert}
           {mh.getStave()}
           {clef === 'treble' && <TrebleClef />}
           {clef === 'bass' && <BassClef />}
-          <Chromatics musicKey={musicKey} />
+          <Chromatics musicKey={musicKey} clef={clef}/>
           {mh.getStave()}
           {mh.getSign('4-4')}
           {mh.getStave()}
         </span>
         <span className='sheetsField'>
           <span className='staveField'>
-            {mh.getStave(28)}
+            {mh.getStave(90)}
           </span>
           <div className='SheetSets'>
             {renderSheetSets(sheetSets, actualSheetSet, musicKey)}

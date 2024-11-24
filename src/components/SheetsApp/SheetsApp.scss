@@ -7,9 +7,51 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  .SheetsContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-height: 52%;
+  
+    &.bassWhenBoth {
+      position: absolute;
+      left: 33.5%;
+      top: 19.5%;
+    }
+  }
+  .withoutMenu {
+    height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT} - 10px);
+    padding-top: calc(#{$MENU_HEIGHT} + 10px);
+  }
 }
 
-.SheetsApp.withoutMenu {
-  height: calc(100vh - #{$MENU_HEIGHT} - #{$FOOTER_HEIGHT} - 10px);
-  padding-top: calc(#{$MENU_HEIGHT} + 10px);
+.SheetsApp.withoutMenu.animateMe {
+  padding-top: 100px; 
+  transform: scale(1.5) translateX(117px);
 }
+
+.SheetsApp.animateMe .SheetsContainer .SheetsSetContainer {
+  display: block;
+  width: 100%
+}
+
+.SheetsApp.animateMe .SheetsContainer .SheetsSetContainer .SheetSets {
+  animation: move-right-1 1200s linear infinite; 
+}
+
+.SheetsApp.animateMe .SheetsContainer .SheetsSetContainer .Sheets {
+  justify-content: flex-start;
+  margin-bottom: -30px;
+}
+
+
+.SheetsApp.animateMe .PianoKeyboard {
+display: none;
+}
+
+.SheetsApp.animateMe * {
+overflow: visible;
+}
+

@@ -10,15 +10,34 @@ const LAST_SOUND = musicConsts.LAST_SOUND;
 const trebleFrom = musicConsts.TREBLE_CLEF_FROM;
 const bassFrom = musicConsts.BASS_CLEF_FROM;
 
-const drawSheetSets = (state, mk, mx, std) => {
+// const trebleTo = musicConsts.TREBLE_CLEF_TO;
+// const bassTo = musicConsts.BASS_CLEF_TO;
+
+const trebleFromMark = musicConsts.TREBLE_CLEF_FROM_MARK;
+const bassFromMark = musicConsts.BASS_CLEF_FROM_MARK;
+
+const trebleToMark = musicConsts.TREBLE_CLEF_TO_MARK;
+const bassToMark = musicConsts.BASS_CLEF_TO_MARK;
+
+const bothFromMark = musicConsts.BOTH_CLEFS_FROM_MARK;
+const bothToMark = musicConsts.BOTH_CLEFS_TO_MARK;
+/**
+ * 
+ * @param {object} state 
+ * @param {string} mk musicKey
+ * @param {number} mx maxSoundsInSet
+ * @param {object} std sheetsToDraw {from: 'A3', to: 'E6'}
+ * @returns array with (wylosowanymi) notes to render on staves
+ * e.g. [["C5", "F#4"], ["D3"], ["G2", "D3"], ["G4"]]
+ */
+const drawSheetSets = (state, mk, mx, std, sheetSetsAmount = 4) => {
   const musicKey = mk || state.musicKey;
   const maxSoundsInSet = mx || state.maxSoundsInSet;
   const sheetsToDraw = std || state.sheetsToDraw;
-  const aaa = _.map(Array(state.sheetSets.length), soundsArray =>
-    mh.drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw)
+  const areBothClefs = state.clefs === 'both';
+  return _.map(Array(sheetSetsAmount), soundsArray =>
+    mh.drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw, areBothClefs)
   );
-  console.log('aaa: ', aaa);
-  return aaa
 }
 
 const countMaxSoundsInSetAmount = (diff, state) => {
@@ -36,14 +55,21 @@ const checkIsSoundGuessed = (pianoKey, state) => {
 }
 
 const goToTheNextSet = state => {
-
   //render new sets, when it was the last set
-  if(state.actualSheetSet >= state.sheetSets.length - 1){
+  if(state.actualSheetSet >= state.sheetSets.length - 1) {
+    //draw (random) new notes
+
+    let newMusicKey = state.musicKey;
+    if (state.randomizeKeys && _.random(1, 10) > 6) {
+      newMusicKey = mh.getRandomKey()
+    }
+
     return {
       ...state,
       actualSheetSet: 0,
-      sheetSets: drawSheetSets(state),
+      sheetSets: drawSheetSets(state, newMusicKey),
       currentTriesAmount: 0,
+      musicKey: newMusicKey
     }
   }
 
@@ -76,23 +102,33 @@ const checkToGoToTheNextSet = (isSoundGuessed, state) => {
   }
 }
 
-const toggleClefs = (clefs, clefToToggle)=> {
+// const toggleClefs = (clefToToggle) => {
   //TODO jak będą dwa klucze na raz to zmienić logikę
-  return [clefToToggle];
-}
+  // return clefToToggle;
+// }
 
 const sheetsApp = (state = {}, action) => {
+  console.log('action.type: ', action.type);
   switch (action.type) {
+
     case 'CHANGE_MUSIC_KEY':
       return {
         ...state,
-        musicKey: action.musicKey,
+        musicKey: action.musicKey || state.musicKey,
         sheetSets: drawSheetSets(state, action.musicKey),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],
         badSounds: [],
       };
+    
+    case 'TOGGLE_ANIMATION':
+      return {
+        ...state,
+        animation: !state.animation,
+        sheetSets: drawSheetSets(state, state.musicKey, state.maxSoundsInSet, state.sheetsToDraw, 1000)
+      }
+
     case 'RENDER_NEW_SHEET_SETS':
       return {
         ...state,
@@ -102,6 +138,7 @@ const sheetsApp = (state = {}, action) => {
         guessedSounds: [],
         badSounds: [],
       };
+
     case 'CHANGE_MAX_SOUNDS_IN_ONE_SET_AMOUNT':
       const newMaxSoundsInSetAmount = countMaxSoundsInSetAmount(action.diff, state);
       if(newMaxSoundsInSetAmount !== state.maxSoundsInSet)
@@ -121,6 +158,7 @@ const sheetsApp = (state = {}, action) => {
     //     actualSheetSet: ++state.actualSheetSet,
     //     currentTriesAmount: 0,
     //   };
+
     case 'ADD_CHOSEN_SOUND':
       const isGuessed = checkIsSoundGuessed(action.pianoKey, state);
       let currentState = {
@@ -137,14 +175,16 @@ const sheetsApp = (state = {}, action) => {
         ...currentState,
         badSounds: h.pushUniq(state.badSounds, [action.pianoKey]),
       };
+
     case 'RESET_CLICKED_SOUNDS':
-      if(!state.currentTriesAmount)
+      if(!state.currentTriesAmount) 
         return {
           ...state,
           guessedSounds: [],
           badSounds: [],
         };
       else return state;
+
     case 'TOGGLE_MUSIC_KEY_NAMES_VISIBILITY':
       return {
         ...state,
@@ -152,6 +192,7 @@ const sheetsApp = (state = {}, action) => {
         guessedSounds: [],
         badSounds: [],
       };
+
     case 'CHANGE_SWITCHING_TO_THE_NEXT_SET_MODE':
       return {
         ...state,
@@ -162,15 +203,24 @@ const sheetsApp = (state = {}, action) => {
         guessedSounds: [],
         badSounds: [],
       };
+
     case 'CHANGE_SHEETS_RANGE':
-      let clef = state.clefs[0];
-      let clefFrom = clef === 'treble' ? trebleFrom : bassFrom;
-      let newFrom = mh.calcSoundNameFromScopeByNumber(clefFrom, action.from, LAST_SOUND);
-      let newTo = mh.calcSoundNameFromScopeByNumber(clefFrom, action.to, LAST_SOUND);
+      const actionFrom = action.from || state.actualScope.from;
+      const actionTo = action.to || state.actualScope.to;
+      let clefs = 'treble';
+      if (actionFrom < trebleFromMark && actionTo <= bassToMark) {
+        clefs = 'bass'
+      } else if (actionFrom < trebleFromMark && actionTo > bassToMark) {
+        clefs = 'both'
+      }
+      let clefFrom = clefs === 'treble' ? trebleFrom : bassFrom;
+      let newFrom = mh.calcSoundNameFromScopeByNumber(bassFrom, actionFrom, LAST_SOUND);
+      let newTo = mh.calcSoundNameFromScopeByNumber(bassFrom, actionTo, LAST_SOUND);
       let newSheetsToDraw = {
         from: newFrom,
         to: newTo,
       };
+      
       return {
         ...state,
         sheetSets: drawSheetSets(...[state, , , newSheetsToDraw]),
@@ -180,29 +230,49 @@ const sheetsApp = (state = {}, action) => {
         badSounds: [],
         sheetsToDraw: newSheetsToDraw,
         actualScope: {
-          from: action.from,
-          to: action.to,
-        }
+          from: actionFrom,
+          to: actionTo,
+        },
+        clefs
       };
+
     case 'TOGGLE_CLEF':
-      clef = action.clef;
-      clefFrom = clef === 'treble' ? trebleFrom : bassFrom;
-      newFrom = mh.calcSoundNameFromScopeByNumber(clefFrom, state.actualScope.from, LAST_SOUND);
-      newTo = mh.calcSoundNameFromScopeByNumber(clefFrom, state.actualScope.to, LAST_SOUND);
+      clefs = action.clef;
+      clefFrom = clefs === 'bass' || clefs === 'both' ? bassFrom : trebleFrom;
+      newFrom = mh.calcSoundNameFromScopeByNumber(clefFrom, bassFromMark, LAST_SOUND);
+      newTo = mh.calcSoundNameFromScopeByNumber(clefFrom, clefs === 'both' ? trebleToMark : bassToMark, LAST_SOUND);
       newSheetsToDraw = {
         from: newFrom,
         to: newTo,
       };
+
       return {
         ...state,
-        clefs: toggleClefs(state.clefs, action.clef),
+        clefs,
         sheetSets: drawSheetSets(...[state, , , newSheetsToDraw]),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],
         badSounds: [],
         sheetsToDraw: newSheetsToDraw,
+        actualScope: {
+          from: clefs === 'treble' ? trebleFromMark : bothFromMark,
+          to: clefs === 'bass' ? bassToMark : bothToMark,
+        }
       };
+
+    case 'CHANGE_RANDOMIZE_KEYS':
+      let changedMusicKey = state.musicKey;
+      if (state.randomizeKeys && _.random(1, 10) > 6) {
+        changedMusicKey = mh.getRandomKey()
+      }
+
+      return {
+        ...state,
+        randomizeKeys: !state.randomizeKeys,
+        musicKey: !state.randomizeKeys ? mh.getRandomKey() : state.musicKey,
+        sheetSets: drawSheetSets(state, changedMusicKey),
+      }
 
     default:
       return state;

@@ -4,6 +4,7 @@ export default {
   //chroma - sharpy i flaty
   //clef - klucz (wiolinowy lub basowy)
   //pitch - jedna linia z pięciolinii
+  //set - nuty w jednym dźwięku (od 1 do 3 lub więcej nut) na raz
   BASIC_SOUND_NAMES: ['C', 'D', 'E', 'F', 'G', 'A', 'B',],
   BASIC_SOUND_NAMES_H: ['C', 'D', 'E', 'F', 'G', 'A', 'H',],
   BASIC_SOUND_NAMES_PLUS_SHARPS:
@@ -17,17 +18,24 @@ export default {
   SHARPS: ['C#', 'D#', 'F#', 'G#', 'A#'],
   ALL_SOUNDS_NAMES: ['C', ['C#', 'Db'], 'D', ['D#', 'Eb'], 'E', 'F', ['F#', 'Gb'], 'G', ['G#', 'Ab'], 'A', ['A#', 'Bb'], 'B',],
   CHROMATIC_SIGNS_PITCHES: {
+    treble: {
     'sharp': ['5', '3.5', '0.5u', '4', '2.5', '4.5'],
     'flat': ['3', '4.5', '2.5', '4', '2', '3.5'],
+    },
+    bass: {
+      'sharp': ['4', '2.5', '4.5', '3', '1.5', '3.5'],
+      'flat': ['2', '3.5', '1.5', '3', '1', '2.5'],
+    }
   },
   CHROMATIC_SOUNDS_ORDER: {
     'sharp': ['F', 'C', 'G', 'D', 'A', 'E'],
     'flat': ['B', 'E', 'A', 'D', 'G', 'C'],
   },
   MUSIC_KEYS_ORDER: [
-    'C', 'G', 'D', 'A', 'E', 'B', /*'F#',*/ 'F', 'Bb', 'Eb', 'Ab', 'Db', /*'Gb'*/
+    'C', 'G', 'D', 'A', 'E', 'B', 'F#', 'F', 'Bb', 'Eb', 'Ab', 'Db', 'Gb'
   ],
-  LAST_SOUND: 'C8',
+  MUSIC_KEYS_BUTTONS: ['C', 'G (#)', 'D (##)', 'A (###)', 'E (####)', 'B (#####)', 'F# (######)', 'F (b)', 'Bb (bb)', 'Eb (bbb)', 'Ab (bbbb)', 'Db (bbbbb)', 'Gb (bbbbbb)' ],
+  LAST_SOUND: 'C6',
   TREBLE_CLEF_FROM: 'A3',
   TREBLE_CLEF_TO: 'C6',
   BASS_CLEF_FROM: 'C2',
@@ -68,8 +76,34 @@ export default {
     4: 'G2',
     9: 'E3',
     12: 'A3',
+    14: 'C4',
     16: 'E4',
   },
+
+  BOTH_CLEFS_RANGE_MARKS: {
+    0: 'C2',
+    2: 'E2',
+    4: 'G2',
+    9: 'E3',
+    12: 'A3',
+    14: 'C4',
+    16: 'E4',
+    21: 'C5',
+    24: 'F5',
+    28: 'C6',
+  },
+
+  TREBLE_CLEF_FROM_MARK: 12,
+  TREBLE_CLEF_TO_MARK: 28,
+  BASS_CLEF_FROM_MARK: 0,
+  BASS_CLEF_TO_MARK: 16,
+  BOTH_CLEFS_FROM_MARK: 0,
+  BOTH_CLEFS_TO_MARK: 28,
+
+
+  NOTES_BETWEEN_STAVES: [
+    'Ab3', 'A3', 'A#3', 'Bb3', 'B3', 'C4', 'C#4', 'Db4', 'D4', 'D#4', 'Eb4', 'E4',
+  ],
 
   MUSIC_FONT_DIC: {
     trebleClef: {

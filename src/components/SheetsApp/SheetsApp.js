@@ -20,38 +20,39 @@ const SheetsApp = ({
   isBass,
 }) => {
   const classes = classNames(
-    'SheetsApp', { withoutMenu: !IS_MENU }
+    'SheetsApp', { withoutMenu: !IS_MENU, animateMe: sheetsAppState.animation }, 
   );
 
   const sheetsClasses = classNames(
     { 'oneOfClefs' : areTwoClefs }
-    );
-  console.log('sheetsAppState: ', sheetsAppState)
+  );
 
   return (
     <div
       className={classes}
       onClick={onClick}>
+        <div className='SheetsContainer'>
+          {isTreble && (
+            <Sheets
+              className={sheetsClasses}
+              musicKey={sheetsAppState.musicKey}
+              sheetSets={sheetsAppState.sheetSets}
+              actualSheetSet={sheetsAppState.actualSheetSet}
+              animation={sheetsAppState.animation}
+              clef='treble'/>
+            )
+          }
 
-      {isTreble && (
-        <Sheets
-          className={sheetsClasses}
-          musicKey={sheetsAppState.musicKey}
-          sheetSets={sheetsAppState.sheetSets}
-          actualSheetSet={sheetsAppState.actualSheetSet}
-          clef='treble'/>
-        )
-      }
-
-      {isBass && (
-        <Sheets
-          className={sheetsClasses}
-          musicKey={sheetsAppState.musicKey}
-          sheetSets={sheetsAppState.sheetSets}
-          actualSheetSet={sheetsAppState.actualSheetSet}
-          clef='bass'/>
-        )
-      }
+          {isBass && (
+            <Sheets
+              className={sheetsClasses}
+              musicKey={sheetsAppState.musicKey}
+              sheetSets={sheetsAppState.sheetSets}
+              actualSheetSet={sheetsAppState.actualSheetSet}
+              clef='bass'/>
+            )
+          }
+      </div>
 
       {IS_KEY_NAMES_BUTTONS_COMP &&
         <KeyboardButtonsNames
@@ -70,7 +71,6 @@ const SheetsApp = ({
 
 SheetsApp.propTypes = {
   areTwoClefs: PropTypes.bool,
-
   sheetsAppState: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onPianoKeyClick: PropTypes.func.isRequired,

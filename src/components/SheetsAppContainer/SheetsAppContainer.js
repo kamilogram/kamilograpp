@@ -16,8 +16,8 @@ const mapStateToProps = state => ({
   sheetsAppState: state.sheetsApp,
   startPianoKey: mh.calcStartPianoKey(state.sheetsApp.sheetsToDraw.from),
   endPianoKey: mh.calcEndPianoKey(state.sheetsApp.sheetsToDraw.to),
-  isTreble: state.sheetsApp.clefs.includes("treble"),
-  isBass: state.sheetsApp.clefs.includes("bass"),
+  isTreble: state.sheetsApp.clefs === "treble" || state.sheetsApp.clefs === "both",
+  isBass: state.sheetsApp.clefs === "bass" || state.sheetsApp.clefs === "both",
 });
 
 const mapDispatchToProps = dispatch => ({

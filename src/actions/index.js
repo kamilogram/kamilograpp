@@ -13,6 +13,10 @@ export const resetClickedSounds = () => ({
   type: 'RESET_CLICKED_SOUNDS',
 });
 
+export const toggleAnimation = () => ({
+  type: 'TOGGLE_ANIMATION',
+});
+
 export const changeMusicKey = musicKey => ({
   type: 'CHANGE_MUSIC_KEY',
   musicKey,
@@ -31,10 +35,14 @@ export const changeSwitchingNextSetMode = () => ({
   type: 'CHANGE_SWITCHING_TO_THE_NEXT_SET_MODE',
 });
 
+export const changeRandomizeKeys = () => ({
+  type: 'CHANGE_RANDOMIZE_KEYS'
+})
+
 export const changeSheetsRange = value => ({
   type: 'CHANGE_SHEETS_RANGE',
-  from: value[0],
-  to: value[1],
+  from: value ? value[0] : null,
+  to: value ? value[1] : null,
 });
 
 export const goToPage = page => ({

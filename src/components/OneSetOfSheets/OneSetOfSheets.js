@@ -14,8 +14,7 @@ const OneSetOfSheets = ({className, emptyStavesAmount, ...rest}) => {
   );
 
   const renderSheet = props =>
-    props.musicKeyNames.map((musicKeyName, index) =>
-    {
+    props.musicKeyNames.map((musicKeyName, index) => {
       const chroma = mh.isWithChromas(musicKeyName, props.musicKey);
       return (
         <div key={musicKeyName + index}
@@ -49,7 +48,6 @@ OneSetOfSheets.propTypes = {
   emptyStavesAmount: PropTypes.number,
   clef: PropTypes.oneOf(['treble', 'bass']),
   sheetLength: PropTypes.oneOf(["quarter"]),
-
   musicKey: PropTypes.string.isRequired,
   musicKeyNames: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

@@ -5,8 +5,10 @@ const musicDic = musicConsts.MUSIC_FONT_DIC;
 const basicSoundNames = musicConsts.BASIC_SOUND_NAMES;
 const allSoundsNames = musicConsts.ALL_SOUNDS_NAMES;
 const musicKeys = musicConsts.MUSIC_KEYS;
+const musicKeysOrder = musicConsts.MUSIC_KEYS_ORDER;
 const chromaticSoundsOrder = musicConsts.CHROMATIC_SOUNDS_ORDER;
 const pitchConsts = musicConsts.CHROMATIC_SIGNS_PITCHES;
+const notesBetweenStaves = musicConsts.NOTES_BETWEEN_STAVES;
 
 export default {
 
@@ -27,22 +29,44 @@ export default {
 
   /**
    * Returns a sign from webfont of music key
-   * @param {string} pianoKeyName a note ('G5', 'A4', 'E#4', 'Db4')
+   * @param {string} pianoKeyName a note ('G5', 'A4', 'E#4', 'Db4', 'C4-down')
    * @param {*} clefType treble or bass
    * @param {*} sheetLength quarter | sharp | flat
-   * The sharp and flat sheetLength is not used yet, and will be when the single notes can have chromas
-   * return a note sign from the webfont (e.g. note from a two line under a stave, without any chroma in a treble clef has an 'a' sign in the music font)
+   * (The sharp and flat sheetLength is not used yet, and will be when the single notes can have chromas);
+   * @returns a note sign from the webfont (e.g. note from a two line under a stave, without any chroma in a treble clef has an 'a' sign in the music font)
    */
   getSignByPianoKeyName(pianoKeyName, clefType, sheetLength) {
+    const cleanedNote = this.removeDuplicateWhenNoteIsBetweenStaves (pianoKeyName, clefType)
+    const noteWithoutChromas = this.deleteChromas(cleanedNote);
+      
     //pitch = '1.5', '4', '1d', '2u' - where this sound is in the stave
     const pitch = _.findKey(musicDic, sheet => {
-      return _.get(sheet, clefType) === this.deleteChromas(pianoKeyName);
+      return _.get(sheet, clefType) === noteWithoutChromas;
     });
     return this.getSign(pitch, sheetLength);
   },
 
-  getChromaSigns(keyType, i) {
-    const pitches = _.get(pitchConsts, keyType);
+  removeDuplicateWhenNoteIsBetweenStaves (note, clef) {
+    const fromTreble = note.indexOf("-up");
+    const fromBass = note.indexOf("-down");
+    if (
+      (clef === 'treble' && fromBass > -1)
+      || (clef === 'bass' && fromTreble > -1)
+      ) {
+        return null
+      };
+      
+      let cleanedNote = note;
+      if (fromTreble > -1) {
+        cleanedNote = note.substring(0, fromTreble)
+      } else if (fromBass > -1) {
+        cleanedNote = note.substring(0, fromBass)
+      }
+      return cleanedNote;
+  },
+
+  getChromaSigns(keyType, i, clef) {
+    const pitches = _.get(pitchConsts, [clef, keyType]);
     let iterator = 1;
     return _.map(pitches, pitch => {
       if (iterator > i) return;
@@ -78,6 +102,19 @@ export default {
     return _.replace(withoutSharp, 'b', '');
   },
 
+  deleteUpAndDown(name) {
+    if (_.isArray(name)) {
+      return name.map(note => this.deleteUpAndDownFromSimpleNote(note))
+    }
+
+    return this.deleteUpAndDownFromSimpleNote(name);
+  },
+
+  deleteUpAndDownFromSimpleNote(note) {
+    const withoutUpAdnDown = _.replace(note, '-up', '');
+    return _.replace(withoutUpAdnDown, '-down', '');
+  },
+
   /**
    * Czyżby zwracał # lub b dla pojedynczej nuty???
    * @param {string} soundName 'D4' / 'A3' ...
@@ -111,11 +148,11 @@ export default {
   },
 
   /**
-   * 
+   * Wylicza jakie dźwięki wchodzą w wyznaczony zakres
    * @param {string} from 'A3' | 'G5' | ...
    * @param {string} to  'A3' | 'G5' | ...
    * @param {boolean} withBlack 
-   * returns an array of sounds form 'from' note to 'to' note with or ithout notes with chroma e.g. [A3, B3, C4, ......, F5]
+   * @returns an array of sounds form 'from' note to 'to' note with or without notes with chroma e.g. [A3, B3, C4, ......, F5]
    */
   generateKeysArray(from, to, withBlack = false) {
     const fromSign = _.get(from, 0);
@@ -215,14 +252,34 @@ export default {
    * return boolean
    */
   isSoundInArray(sound, soundsArray, musicKey, clear = false) {
-    const soundName = this.isBlackPianoKey(sound)
-      ? this.getBlackSoundWithCurrentChroma(sound, musicKey)
-      : sound;
+    let newSoundsArray = soundsArray;
+    let newSound = sound;
+    if (musicKey === 'F#') {
+      newSoundsArray = _.map(soundsArray, el => {
+        return !_.isArray(el) && _.startsWith(el, 'F') && el.length === 2 ? `E#${_.nth(el, 1)}` : el
+      })
+      newSound = !_.isArray(sound) && _.startsWith(sound, 'F') && sound.length === 2 ? `E#${_.nth(sound, 1)}` : sound;
+    }
 
-    return !!_.findKey(soundsArray, soundFromArray => {
-      if (this.isBlackPianoKey(soundFromArray))
-        return _.isEqual(this.getBlackSoundWithCurrentChroma(soundFromArray, musicKey), soundName)
-      else return _.isEqual(soundFromArray, soundName)
+    if (musicKey === 'Gb') {
+      newSoundsArray = _.map(soundsArray, el => {
+        return !_.isArray(el) && _.startsWith(el, 'B') && el.length === 2 ? `Cb${+_.nth(el, 1) + 1}` : el
+      })
+      newSound = !_.isArray(sound) && _.startsWith(sound, 'B') && sound.length === 2 ? `Cb${+_.nth(sound, 1) + 1}` : sound;
+    }
+
+    const soundName = this.isBlackPianoKey(newSound)
+    ? this.getBlackSoundWithCurrentChroma(newSound, musicKey)
+    : newSound;
+    
+    return !!_.findKey(newSoundsArray, soundFromArray => {
+      const clearSoundInArray = this.deleteUpAndDown(soundFromArray)
+      if (this.isBlackPianoKey(clearSoundInArray)){
+        return _.isEqual(this.getBlackSoundWithCurrentChroma(clearSoundInArray, musicKey), soundName)
+      }
+      else {
+        return _.isEqual(clearSoundInArray, soundName)
+      }
     })
   },
 
@@ -276,22 +333,45 @@ export default {
     return this.getChromaType(musicKeyChromaValue, short);
   },
 
-  drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw) {
+  /**
+   * Losowanie nowych nut w jednym secie
+   * @param {string} musicKey 
+   * @param {number} maxSoundsInSet from 1 to 3 (3 may be changed
+   * in a near future)
+   * @param {object} sheetsToDraw {from: 'A3', to: 'E6'}
+   * @param {boolean} areBothClefs
+   * @returns array of (wylosowanych) notes in a one set eg.
+   * ["F5"] | ["E4", "C4", "F5"]
+   */
+  drawSheetSet(musicKey, maxSoundsInSet, sheetsToDraw, areBothClefs) {
     const currentSheetsAmount = _.random(1, maxSoundsInSet);
     const defaultSounds = this.generateKeysArray(sheetsToDraw.from, sheetsToDraw.to);
     const drawedValues = h.drawUniqueAndFarEnoughValues(currentSheetsAmount, 0, defaultSounds.length - 1);
+    const clefsTemporaryBorder = _.random(0, notesBetweenStaves.length - 1)
     return _.map(Array(currentSheetsAmount), (sound, index) => {
+      console.log('DRAW ONE SOUND');
       return this.drawOneSound(
         musicKey,
         defaultSounds,
-        _.get(drawedValues, [index])
+        _.get(drawedValues, [index]),
+        areBothClefs,
+        clefsTemporaryBorder,
       )
     });
   },
 
-  drawOneSound(musicKey, defaultSounds, value) {
+  /**
+   * 
+   * @param {string} musicKey 
+   * @param {*} defaultSounds 
+   * @param {*} value 
+   * @param {boolean} areBothClefs 
+   * @returns 
+   */
+  drawOneSound(musicKey, defaultSounds, value, areBothClefs, clefsBorder) {
     const soundsInThisMusicKey = this.changeSoundsWithMusicKeyChromas(defaultSounds, musicKey);
-    return _.get(soundsInThisMusicKey, value);
+    const output = _.get(soundsInThisMusicKey, value);
+    return this.setNoteIntoOneStaveWhenBetweenTwoStaves(output, areBothClefs, clefsBorder);
   },
 
   changeSoundsWithMusicKeyChromas(defaultSounds, musicKey) {
@@ -310,6 +390,25 @@ export default {
         ? this.insertChromaIntoSound(sound, musicKey)
         : sound;
     });
+  },
+
+  /**
+   * Adds '-up' or '-down' (by random choice) to note if there are two staves and the note is between them.
+   * @param {string} note 
+   * @param {boolean} areBothClefs 
+   * @returns 
+   */
+  setNoteIntoOneStaveWhenBetweenTwoStaves(note, areBothClefs, clefsBorder) {
+    if (!areBothClefs) {
+      return note;
+    }
+
+    const isNoteBetweenStaves = notesBetweenStaves.some(noteBetween => noteBetween === note);
+    if(!isNoteBetweenStaves) {
+      return note;
+    }
+
+    return _.indexOf(notesBetweenStaves, note) > clefsBorder ? `${note}-up` : `${note}-down`
   },
 
   insertChromaIntoSound(soundName, musicKey) {
@@ -340,5 +439,9 @@ export default {
     if (mainName <= 'B') return 'B' + number;
     else if (mainName <= 'E') return 'E' + number;
     else return 'B' + number;
-  }
+  },
+
+  getRandomKey() {
+    return musicKeysOrder[_.random(0, musicKeysOrder.length - 1)]
+  },
 }

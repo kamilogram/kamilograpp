@@ -3,11 +3,13 @@ import SheetsAppLeftPanel from '../SheetsAppLeftPanel/SheetsAppLeftPanel.js';
 import { connect } from 'react-redux';
 import {
   changeMusicKey,
+  toggleAnimation,
   changeMaxSoundsInOneSetAmount,
   toggleMusicKeyNamesVis,
   changeSwitchingNextSetMode,
   toggleClef,
   changeSheetsRange,
+  changeRandomizeKeys,
 } from '../../actions/index';
 
 
@@ -16,12 +18,20 @@ const mapStateToProps = state => ({
   showKeyNames: state.sheetsApp.showKeyNames,
   isNextSetAfterGuessAll: state.sheetsApp.isNextSetAfterGuessAll,
   sheetsToDraw: state.sheetsApp.sheetsToDraw,
-  clef: state.sheetsApp.clefs[0],
+  clef: state.sheetsApp.clefs,
+  musicKey: state.sheetsApp.musicKey,
+  actualScope: state.sheetsApp.actualScope,
+  randomizeKeys: state.sheetsApp.randomizeKeys,
+  animation: state.sheetsApp.animation,
 });
 
 const mapDispatchToProps = dispatch => ({
   onChangeMusicKey(musicKey) {
     dispatch(changeMusicKey(musicKey));
+  },
+
+  onToggleAnimation() {
+    dispatch(toggleAnimation());
   },
 
   onChangeMaxSoundInSetAmount(diff) {
@@ -36,8 +46,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeSwitchingNextSetMode())
   },
 
+  onRandomizeKeys() {
+    dispatch(changeRandomizeKeys())
+  },
+
   onClefToggle(clef) {
     dispatch(toggleClef(clef))
+    dispatch(changeSheetsRange())
   },
 
   onChangeSheetsRange(value) {
