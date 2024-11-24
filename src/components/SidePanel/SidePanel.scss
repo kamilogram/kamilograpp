@@ -23,4 +23,6 @@
 //without menu
 .SidePanel.withoutMenu {
   height: calc(100vh - #{$FOOTER_HEIGHT});
+    overflow: auto;
+    padding-bottom: 36px;
 }
