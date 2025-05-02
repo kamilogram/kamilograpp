@@ -81,3 +81,15 @@ $KEY_BORDER_WIDTH: 1px;
   z-index: 1;
   word-wrap: break-word;
 }
+
+@media (max-width: 1000px) {
+  .BlackPianoKey {
+    width: calc(50px * 0.7);
+    height: calc(109px * 0.6);
+    margin: 0 calc(-1 * 46px / 2.5);
+  }
+
+  .PianoKeyboard {
+    height: 115px;
+  }
+}
