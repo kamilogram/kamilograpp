@@ -58,6 +58,10 @@ const mapDispatchToProps = dispatch => ({
   onChangeSheetsRange(value) {
     dispatch(changeSheetsRange(value))
   },
+
+  onChangeAnimationSpeed(speed) {
+    dispatch({ type: 'CHANGE_ANIMATION_SPEED', speed });
+  },
 })
 
 const SheetsAppLeftPanelContainer = connect(

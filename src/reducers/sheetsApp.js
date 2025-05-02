@@ -115,7 +115,7 @@ const sheetsApp = (state = {}, action) => {
       return {
         ...state,
         musicKey: action.musicKey || state.musicKey,
-        sheetSets: drawSheetSets(state, action.musicKey),
+        sheetSets: drawSheetSets(state, action.musicKey, state.maxSoundsInSet, state.sheetsToDraw, state.amountOfSets),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],
@@ -123,11 +123,19 @@ const sheetsApp = (state = {}, action) => {
       };
     
     case 'TOGGLE_ANIMATION':
+      const amountOfSets = state.animation ? 4 : 1000
       return {
         ...state,
         animation: !state.animation,
-        sheetSets: drawSheetSets(state, state.musicKey, state.maxSoundsInSet, state.sheetsToDraw, 1000)
+        sheetSets: drawSheetSets(state, state.musicKey, state.maxSoundsInSet, state.sheetsToDraw, amountOfSets),
+        amountOfSets,
       }
+
+    case 'CHANGE_ANIMATION_SPEED':
+      return {
+        ...state,
+        animationSpeed: action.speed,
+      };
 
     case 'RENDER_NEW_SHEET_SETS':
       return {
@@ -145,7 +153,7 @@ const sheetsApp = (state = {}, action) => {
         return {
           ...state,
           maxSoundsInSet: newMaxSoundsInSetAmount,
-          sheetSets: drawSheetSets(...[state, , newMaxSoundsInSetAmount]),
+          sheetSets: drawSheetSets(...[state, , newMaxSoundsInSetAmount, state.sheetsToDraw, state.amountOfSets]),
           actualSheetSet: 0,
           currentTriesAmount: 0,
           guessedSounds: [],
@@ -223,7 +231,7 @@ const sheetsApp = (state = {}, action) => {
       
       return {
         ...state,
-        sheetSets: drawSheetSets(...[state, , , newSheetsToDraw]),
+        sheetSets: drawSheetSets(...[state, , , newSheetsToDraw, state.amountOfSets]),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],
@@ -249,7 +257,7 @@ const sheetsApp = (state = {}, action) => {
       return {
         ...state,
         clefs,
-        sheetSets: drawSheetSets(...[state, , , newSheetsToDraw]),
+        sheetSets: drawSheetSets(...[state, , , newSheetsToDraw, state.amountOfSets]),
         actualSheetSet: 0,
         currentTriesAmount: 0,
         guessedSounds: [],

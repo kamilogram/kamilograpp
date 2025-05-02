@@ -1,5 +1,62 @@
 @import "../../styles/constans.scss";
 
 .SheetsAppLeftPanel {
-  
+  font-size: calc(2vh + 3px);
+}
+
+.animationContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.sliderWrapper input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* width: 100%; */
+  height: 4px;
+  background: #fab833;
+  border-radius: 5px;
+  outline: none;
+}
+
+.sliderWrapper input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: white; /* Środek kropki */
+  border: 2px solid #fab833; /* Otoczka w kolorze fab833 */
+  border-radius: 50%; /* Zaokrąglenie kropki */
+  cursor: pointer;
+}
+
+.sliderWrapper input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: white; /* Środek kropki */
+  border: 2px solid #fab833; /* Otoczka w kolorze fab833 */
+  border-radius: 50%; /* Zaokrąglenie kropki */
+  cursor: pointer;
+}
+
+.sliderWrapper input[type="range"]::-ms-thumb {
+  width: 14px;
+  height: 14px;
+  background: white; /* Środek kropki */
+  border: 2px solid #fab833; /* Otoczka w kolorze fab833 */
+  border-radius: 50%; /* Zaokrąglenie kropki */
+  cursor: pointer;
+}
+
+.sliderWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  height: 20px;
+}
+
+.sliderWrapper input {
+  margin-top: 8px
 }

@@ -16,6 +16,7 @@ const defaultStates = {
     isNextSetAfterGuessAll: true,
     animation: false,
     currentTriesAmount: 0,
+    animationSpeed: 1200,
     sheetsToDraw: {
       from: 'E4',
       to: 'F5'

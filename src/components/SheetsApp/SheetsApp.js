@@ -23,13 +23,22 @@ const SheetsApp = ({
     'SheetsApp', { withoutMenu: !IS_MENU, animateMe: sheetsAppState.animation }, 
   );
 
-  const sheetsClasses = classNames(
-    { 'oneOfClefs' : areTwoClefs }
-  );
+  const { animationSpeed } = sheetsAppState;
+
+  // Ustawienie zmiennej CSS dla prędkości animacji
+  const appStyle = {
+    '--animation-duration': `${animationSpeed}s`,
+  };
+
+  const sheetsClasses = classNames({
+    'oneOfClefs': areTwoClefs
+  });
+
 
   return (
     <div
       className={classes}
+      style={appStyle}
       onClick={onClick}>
         <div className='SheetsContainer'>
           {isTreble && (
@@ -74,6 +83,12 @@ SheetsApp.propTypes = {
   sheetsAppState: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   onPianoKeyClick: PropTypes.func.isRequired,
+  startPianoKey: PropTypes.string.isRequired,
+  endPianoKey: PropTypes.string.isRequired,
+  animationSpeed: PropTypes.number.isRequired,
+  onChangeAnimationSpeed: PropTypes.func.isRequired,
+  isTreble: PropTypes.bool.isRequired,
+  isBass: PropTypes.bool.isRequired,
 }
 
 SheetsApp.defaultProps = {

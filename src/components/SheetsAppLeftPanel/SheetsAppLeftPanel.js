@@ -31,6 +31,7 @@ const SheetsAppLeftPanel = ({
   actualScope,
   randomizeKeys,
   animation,
+  animationSpeed,
   onChangeMusicKey,
   onToggleAnimation,
   onChangeMaxSoundInSetAmount,
@@ -39,6 +40,7 @@ const SheetsAppLeftPanel = ({
   onClefToggle,
   onChangeSheetsRange,
   onRandomizeKeys,
+  onChangeAnimationSpeed
 }) => {
   const renderGoingToTheNextSetMode = mode => {
     const text = mode ? 'aż do odgadnięcia wszystkich nut.' : 'tyle ile nut.'
@@ -73,11 +75,30 @@ const SheetsAppLeftPanel = ({
 
       <SideUnit
         name='Animacja'>
-          <Button
-            name={animation ? "wyłącz" : "uruchom"}
-            onClick={onToggleAnimation}
-            className={animation ? 'chosen' : ''}
-          />
+          <div className='animationContainer'>
+            <Button
+              name={animation ? "wyłącz" : "uruchom"}
+              onClick={onToggleAnimation}
+              className={animation ? 'chosen' : ''}
+            />
+            {animation && (
+              <div className="sliderContainer">
+                <div className="sliderWrapper">
+                  <span className="sliderLabel">szybciej</span>
+                  <input
+                    type="range"
+                    id="animationSpeed"
+                    min="300"
+                    max="3000"
+                    step="100"
+                    value={animationSpeed}
+                    onChange={(e) => onChangeAnimationSpeed(parseInt(e.target.value))}
+                  />
+                  <span className="sliderLabel">wolniej</span>
+                </div>
+              </div>
+            )}
+          </div>
       </SideUnit>
 
       <SideUnit
@@ -162,6 +183,7 @@ SheetsAppLeftPanel.propTypes = {
   onChangeSwitchingNextSetMode: PropTypes.func.isRequired,
   onClefToggle: PropTypes.func.isRequired,
   onRandomizeKeys: PropTypes.func.isRequired,
+  onChangeAnimationSpeed: PropTypes.func.isRequired,
 };
 
 SheetsAppLeftPanel.defaultProps = {
