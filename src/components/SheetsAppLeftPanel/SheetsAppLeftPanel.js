@@ -58,7 +58,6 @@ const SheetsAppLeftPanel = ({
     }
   }
 
-
   return (
     <div className='SheetsAppLeftPanel'>
       <SideUnit
@@ -84,6 +83,11 @@ const SheetsAppLeftPanel = ({
             {animation && (
               <div className="sliderContainer">
                 <div className="sliderWrapper">
+                  <Button
+                    name="+"
+                    onClick={() => onChangeAnimationSpeed(Math.max(300, (animationSpeed) - 100))}
+                    className="sliderButton"
+                  />
                   <span className="sliderLabel">szybciej</span>
                   <input
                     type="range"
@@ -95,13 +99,21 @@ const SheetsAppLeftPanel = ({
                     onChange={(e) => onChangeAnimationSpeed(parseInt(e.target.value))}
                   />
                   <span className="sliderLabel">wolniej</span>
+                  <Button
+                    name="-"
+                    onClick={() => onChangeAnimationSpeed(Math.min(3000, animationSpeed + 100))}
+                    className="sliderButton"
+                  />
+                </div>
+                <div className="currentSpeed">
+                  Aktualna prędkość: {animationSpeed === 300 ? 29 : Math.floor(30 - ((animationSpeed - 300) / (3000 - 300)) * 29)}
                 </div>
               </div>
             )}
           </div>
-      </SideUnit>
+        </SideUnit>
 
-      <SideUnit
+        <SideUnit
         name='Losowanie tonacji'>
         <Button
           value={maxSoundsInSet}
@@ -123,21 +135,21 @@ const SheetsAppLeftPanel = ({
         />
       </SideUnit>
 
-      <SideUnit
+      {!animation && (<SideUnit
         name='Oznaczenia na klawiaturze'>
         <Button
           name={showKeyNames ? 'ukryj' : 'pokaż'}
           onClick={onToggleMusicKeyNamesVis}
         />
-      </SideUnit>
+      </SideUnit>)}
 
-      <SideUnit
+      {!animation && (<SideUnit
         name={renderGoingToTheNextSetMode(isNextSetAfterGuessAll)}>
         <Button
           name='zmień'
           onClick={onChangeSwitchingNextSetMode}
         />
-      </SideUnit>
+      </SideUnit>)}
 
       <SideUnit
         name='Klucz'>

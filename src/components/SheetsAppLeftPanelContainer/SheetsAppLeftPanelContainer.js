@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   actualScope: state.sheetsApp.actualScope,
   randomizeKeys: state.sheetsApp.randomizeKeys,
   animation: state.sheetsApp.animation,
+  animationSpeed: state.sheetsApp.animationSpeed,
 });
 
 const mapDispatchToProps = dispatch => ({
