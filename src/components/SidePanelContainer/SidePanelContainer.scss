@@ -4,16 +4,16 @@
   0% {
     transform: translateX(0);
     opacity: 1;
-    background-color: $MAIN_COLOR_LIGHT;
+    // background-color: $MAIN_COLOR_LIGHT;
   }
   30% {
     opacity: 0.3;
-    background-color: white;
+    // background-color: white;
   }
   100% {
     transform: translateX(-$SIDE_PANEL_OPENING_BUTTON_WIDTH);
     opacity: 0;
-    background-color: white;
+    // background-color: white;
   }
 }
 
@@ -21,16 +21,16 @@
   0% {
     transform: translateX(-$SIDE_PANEL_OPENING_BUTTON_WIDTH);
     opacity: 0;
-    background-color: white;
+    // background-color: white;
   }
   40% {
     opacity: 0.5;
-    background-color: white;
+    // background-color: white;
   }
   100% {
     transform: translateX(0);
     opacity: 1;
-    background-color: $MAIN_COLOR_LIGHT;
+    // background-color: $MAIN_COLOR_LIGHT;
   }
 }
 
@@ -79,6 +79,12 @@
     &.toggleSidePanelAnim-leave-active {
       animation: hidePanelOpeningButton 0.6s cubic-bezier(.46,-0.35,0,.97) 1 forwards;
     }
+  }
+
+  .panelOpeningButton.darkMode {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    border: 1px solid #f0f0f0;
   }
 
   .SidePanel {

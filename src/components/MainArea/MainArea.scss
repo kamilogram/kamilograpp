@@ -18,3 +18,12 @@
 .MainArea.withoutMenu {
   height: calc(100vh - #{$FOOTER_HEIGHT})
 }
+
+.MainArea.darkMode {
+  background-color: #1a1a1a;
+  color: #f0f0f0;
+}
+
+.MainArea.darkMode img {
+  filter: invert(1) brightness(2);
+}

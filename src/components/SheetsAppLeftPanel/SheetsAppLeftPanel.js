@@ -30,6 +30,7 @@ const SheetsAppLeftPanel = ({
   clef,
   actualScope,
   randomizeKeys,
+  darkMode,
   animation,
   animationSpeed,
   onChangeMusicKey,
@@ -40,7 +41,8 @@ const SheetsAppLeftPanel = ({
   onClefToggle,
   onChangeSheetsRange,
   onRandomizeKeys,
-  onChangeAnimationSpeed
+  onChangeAnimationSpeed,
+  onChangeViewMode
 }) => {
   const renderGoingToTheNextSetMode = mode => {
     const text = mode ? 'aż do odgadnięcia wszystkich nut.' : 'tyle ile nut.'
@@ -74,55 +76,66 @@ const SheetsAppLeftPanel = ({
 
       <SideUnit
         name='Animacja'>
-          <div className='animationContainer'>
-            <Button
-              name={animation ? "wyłącz" : "uruchom"}
-              onClick={onToggleAnimation}
-              className={animation ? 'chosen' : ''}
-            />
-            {animation && (
-              <div className="sliderContainer">
-                <div className="sliderWrapper">
-                  <Button
-                    name="+"
-                    onClick={() => onChangeAnimationSpeed(Math.max(300, (animationSpeed) - 100))}
-                    className="sliderButton"
-                  />
-                  <span className="sliderLabel">szybciej</span>
-                  <input
-                    type="range"
-                    id="animationSpeed"
-                    min="300"
-                    max="3000"
-                    step="100"
-                    value={animationSpeed}
-                    onChange={(e) => onChangeAnimationSpeed(parseInt(e.target.value))}
-                  />
-                  <span className="sliderLabel">wolniej</span>
-                  <Button
-                    name="-"
-                    onClick={() => onChangeAnimationSpeed(Math.min(3000, animationSpeed + 100))}
-                    className="sliderButton"
-                  />
-                </div>
-                <div className="currentSpeed">
-                  Aktualna prędkość: {animationSpeed === 300 ? 29 : Math.floor(30 - ((animationSpeed - 300) / (3000 - 300)) * 29)}
-                </div>
+        <div className='animationContainer'>
+          <Button
+            name={animation ? "wyłącz" : "uruchom"}
+            onClick={onToggleAnimation}
+            className={animation ? 'chosen' : ''}
+          />
+          {animation && (
+            <div className="sliderContainer">
+              <div className="sliderWrapper">
+                <Button
+                  name="+"
+                  onClick={() => onChangeAnimationSpeed(Math.max(300, (animationSpeed) - 100))}
+                  className="sliderButton"
+                />
+                <span className="sliderLabel">szybciej</span>
+                <input
+                  type="range"
+                  id="animationSpeed"
+                  min="300"
+                  max="3000"
+                  step="100"
+                  value={animationSpeed}
+                  onChange={(e) => onChangeAnimationSpeed(parseInt(e.target.value))}
+                />
+                <span className="sliderLabel">wolniej</span>
+                <Button
+                  name="-"
+                  onClick={() => onChangeAnimationSpeed(Math.min(3000, animationSpeed + 100))}
+                  className="sliderButton"
+                />
               </div>
-            )}
-          </div>
-        </SideUnit>
+              <div className="currentSpeed">
+                Aktualna prędkość: {animationSpeed === 300 ? 29 : Math.floor(30 - ((animationSpeed - 300) / (3000 - 300)) * 29)}
+              </div>
+            </div>
+          )}
+        </div>
+      </SideUnit>
 
-        <SideUnit
-        name='Losowanie tonacji'>
-        <Button
-          value={maxSoundsInSet}
-          onClick={() => {
-            onRandomizeKeys();
-            onChangeMusicKey();
-          }}
-          name={randomizeKeys ? 'przestań losować' : 'losuj'}
-        />
+      <SideUnit
+        name='Losowanie tonacji'
+        name2='Tryb widoku'>
+        <div className={'doubledUnitsContainer'}>
+          <Button
+            value={maxSoundsInSet}
+            onClick={() => {
+              onRandomizeKeys();
+              onChangeMusicKey();
+            }}
+            name={randomizeKeys ? 'przestań losować' : 'losuj'}
+          />
+
+          <Button
+            value={maxSoundsInSet}
+            onClick={() => {
+              onChangeViewMode();
+            }}
+            name={darkMode ? 'tryb jasny' : 'tryb ciemny'}
+          />
+        </div>
       </SideUnit>
 
       <SideUnit

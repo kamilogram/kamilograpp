@@ -24,6 +24,7 @@ const mapStateToProps = state => ({
   randomizeKeys: state.sheetsApp.randomizeKeys,
   animation: state.sheetsApp.animation,
   animationSpeed: state.sheetsApp.animationSpeed,
+  darkMode: state.sheetsApp.darkMode,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -62,6 +63,10 @@ const mapDispatchToProps = dispatch => ({
 
   onChangeAnimationSpeed(speed) {
     dispatch({ type: 'CHANGE_ANIMATION_SPEED', speed });
+  },
+
+  onChangeViewMode() {
+    dispatch({ type: 'CHANGE_VIEW_MODE' });
   },
 })
 

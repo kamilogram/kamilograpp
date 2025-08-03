@@ -12,7 +12,10 @@ const SideUnit = props => {
 
   return (
     <div className={classes}>
-      <div className='header'>{props.name}</div>
+      <div className='header'>
+        <span>{props.name}</span>
+        <span>{props.name2}</span>
+      </div>
       {props.children}
     </div>
   );
@@ -20,12 +23,13 @@ const SideUnit = props => {
 
 SideUnit.propTypes = {
   className: PropTypes.string,
-
   name: PropTypes.string.isRequired,
+  name2: PropTypes.string,
 };
 
 SideUnit.defaultProps = {
   className: '',
+  name2: '',
 }
 
 export default SideUnit;

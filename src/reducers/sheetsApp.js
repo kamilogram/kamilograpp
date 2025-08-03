@@ -137,6 +137,12 @@ const sheetsApp = (state = {}, action) => {
         animationSpeed: action.speed,
       };
 
+    case 'CHANGE_VIEW_MODE':
+      return {
+        ...state,
+        darkMode: !state.darkMode,
+      };
+
     case 'RENDER_NEW_SHEET_SETS':
       return {
         ...state,

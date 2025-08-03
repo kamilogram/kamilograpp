@@ -1,30 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import MainArea from '../MainArea/MainArea';
-import SheetsAppContainer from '../SheetsAppContainer/SheetsAppContainer.js';
-import SheetsAppLeftPanelContainer from '../SheetsAppLeftPanelContainer/SheetsAppLeftPanelContainer';
 import './MainAreaContainer.css';
 
-const MainAreaContainer = () => {
-
+const MainAreaContainer = ({ darkMode }) => {
   return (
     <div className='MainAreaContainer'>
-      <MainArea>
-        <SheetsAppContainer
-          left={
-            <SheetsAppLeftPanelContainer />
-          } />
-
-      </MainArea>
+      <MainArea darkMode={darkMode} />
     </div>
   );
-}
-
-MainAreaContainer.propTypes = {
-
 };
 
-MainAreaContainer.defaultProps = {
+const mapStateToProps = (state) => ({
+  darkMode: state.sheetsApp.darkMode
+});
 
-};
-
-export default MainAreaContainer;
+export default connect(mapStateToProps)(MainAreaContainer);

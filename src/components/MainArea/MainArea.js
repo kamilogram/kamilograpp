@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IS_RIGHT_PANEL, IS_MENU } from '../../js/appConstans.js';
+import SheetsAppContainer from '../SheetsAppContainer/SheetsAppContainer.js';
+import SheetsAppLeftPanelContainer from '../SheetsAppLeftPanelContainer/SheetsAppLeftPanelContainer';
 import SidePanelContainer from '../SidePanelContainer/SidePanelContainer';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -7,52 +9,38 @@ import './MainArea.css';
 import classNames from 'classnames';
 
 
-export default class MainArea extends Component {
+function MainArea({ darkMode }) {
+  const classes = classNames(
+    'MainArea', { withoutMenu: !IS_MENU, darkMode },
+  );
+  /*
+    componentDidMount() {
+      this.context.store.dispatch({
+        type: 'RENDER_NEW_SHEET_SETS',
+      });
+    }
+    // to było w starej wersji klasowej, żeby nie było za każdym razem defaultowe nuty E-F-G-H na początku
+  */
 
-  static contextTypes = {
-    store: PropTypes.object
-  }
+  return (
+    <div className={classes}>
+      <SidePanelContainer
+        className='LeftPanel'
+        panel='leftPanel'
+        header='Opcje'>
+          <SheetsAppLeftPanelContainer />
+      </SidePanelContainer>
 
-  componentDidMount() {
-    this.context.store.dispatch({
-      type: 'RENDER_NEW_SHEET_SETS',
-    });
-  }
-
-  render() {
-    const classes=classNames(
-      'MainArea', { withoutMenu: !IS_MENU },
-    );
-
-    return (
-      <div className={classes}>
-
+      {IS_RIGHT_PANEL &&
         <SidePanelContainer
-          className='LeftPanel'
-          panel='leftPanel'
-          header='Opcje'>
-          {this.props.children.props.left}
+          className='RightPanel'
+          panel='rightPanel'>
         </SidePanelContainer>
+      }
 
-        {IS_RIGHT_PANEL &&
-          <SidePanelContainer
-            className='RightPanel'
-            panel='rightPanel' >
-            {this.props.children.props.right}
-          </SidePanelContainer>
-        }
-
-        {this.props.children}
-
-      </div>
-    );
-  }
+      <SheetsAppContainer />
+    </div>
+  );
 }
 
-MainArea.propTypes = {
-
-};
-
-MainArea.defaultProps = {
-
-}
+export default MainArea;

@@ -5,6 +5,7 @@ import { togglePanelVisibility } from '../../actions/index.js';
 
 const mapStateToProps = state => ({
   open: state.sidePanels.leftPanel.open,
+  darkMode: state.sheetsApp.darkMode,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

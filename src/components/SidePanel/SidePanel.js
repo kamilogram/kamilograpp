@@ -8,10 +8,14 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { IS_MENU } from '../../js/appConstans.js';
 
 
-const SidePanel = ({ onCloseClick, onButtonClick, header, children, open }) => {
+const SidePanel = ({ onCloseClick, onButtonClick, header, children, open, darkMode }) => {
 
   const classes=classNames(
-    'SidePanel', { withoutMenu: !IS_MENU, }
+    'SidePanel', { withoutMenu: !IS_MENU, darkMode },
+  );
+
+  const panelOpeningButtonClasses = classNames(
+    'panelOpeningButton', { darkMode },
   );
 
   return (
@@ -37,7 +41,8 @@ const SidePanel = ({ onCloseClick, onButtonClick, header, children, open }) => {
 
         {!open
           && <div
-            className='panelOpeningButton'
+            className={panelOpeningButtonClasses}
+            title='Opcje'
             onClick={onButtonClick}>
             <span className='panelOpeningButtonImg icon-equalizer'/>
             <span
